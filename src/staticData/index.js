@@ -1,0 +1,30 @@
+export const menuOptions = [
+  {
+    index:'1',
+    route:'/home'
+  },
+  {
+    index:'2',
+    route:'/hamburger'
+  },
+  {
+    index:'3',
+    route:'/uploadFile'
+  },
+  {
+    index:'4',
+    route:'/qrcode'
+  },
+  {
+    index:'5',
+    route:'/virtualScroll'
+  },
+  {
+    index:'6',
+    route:'/sliderCode'
+  },
+  {
+    index:'7',
+    route:'/progress'
+  }
+]

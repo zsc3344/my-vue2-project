@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+  </head>
+  <body>
+    <div
+        class="add-file-right"
+        style="height: 70px; margin-left: 100px; margin-top: 15px"
+      >
+        <div class="add-file-right-img" style="margin-left: 70px">
+          上传文件：
+        </div>
+        <input
+          type="file"
+          ref="clearFile"
+          id="filePath"
+          name="file"
+          @change="getFile($event)"
+          multiple="multiplt"
+          class="add-file-right-input"
+          style="margin-left: 70px"
+        />
+</div>
+
+  </body>
+  <script>
+    function getFile(obj) {
+      console.log('===000===')
+      var fileObj = document.getElementById("filePath").files[0];
+      let filePath = fileObj.path;
+      let fileName = fileObj.name;
+      console.log(filePath);
+      console.log(fileName);
+    }
+    </script>
+
+</html>
