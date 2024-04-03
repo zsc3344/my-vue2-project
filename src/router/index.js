@@ -73,6 +73,24 @@ const constantRoutes = [
         name:'progress',
         meta:{title:'环形进度条'},
         component:resolve => require(['@/views/progress/index.vue'], resolve)
+      },
+      {
+        path:'/cropperImage',
+        name:'cropperImage',
+        meta:{title:'图片剪切'},
+        component:resolve => require(['@/views/cropperImage/index.vue'], resolve)
+      },
+      {
+        path:'/echarts',
+        name:'echarts',
+        meta:{title:'ECharts图标'},
+        component:resolve => require(['@/views/echarts/index.vue'], resolve)
+      },
+      {
+        path:'/pdfDrag',
+        name:'pdfDrag',
+        meta:{title:'电子签约合同拖拽方案'},
+        component:resolve => require(['@/views/espDrag/pdfSign.vue'], resolve)
       }
     ]
   }

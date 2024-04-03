@@ -47,9 +47,21 @@
             <i class="el-icon-open"></i>
             <span slot="title">滑块验证</span>
           </el-menu-item>
-          <el-menu-item index="7" route="/progress">
+          <el-menu-item index="6" route="/progress">
             <i class="el-icon-stopwatch"></i>
             <span slot="title">环形进度条</span>
+          </el-menu-item>
+          <el-menu-item index="7" route="/cropperImage">
+            <i class="el-icon-stopwatch"></i>
+            <span slot="title">图片裁剪</span>
+          </el-menu-item>
+          <el-menu-item index="8" route="/echarts">
+            <i class="el-icon-stopwatch"></i>
+            <span slot="title">Echarts</span>
+          </el-menu-item>
+          <el-menu-item index="9" route="/pdfDrag">
+            <i class="el-icon-stopwatch"></i>
+            <span slot="title">电子签合同拖拽方案</span>
           </el-menu-item>
         </el-submenu>
       </el-menu>
@@ -177,9 +189,9 @@ export default {
   position: relative;
   width: 100%;
   height: 100%;
-  // .left-container{
-  //   background-color: #363636;
-  // }
+  .left-container{
+    background-color: #363636;
+  }
   .logo-container{
     width: 100%;
     height: 60px;
@@ -223,12 +235,14 @@ export default {
   }
   .right-container{
     position: relative;
+    overflow-y: auto;
     flex: 1;
     .top-container{
       display: flex;
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
+      width: 100%;
       height: 50px;
       background-color: #f6f7fb;
       .toggle{

@@ -1,16 +1,15 @@
 <template>
   <div class="home">
-    <div>上传文件组件</div>
-    <upload-file
-    ></upload-file>
+    <upload
+    ></upload>
   </div>
 </template>
 <script>
-import uploadFile from '@/components/uploadFile.vue'
+import upload from '@/components/upload.vue'
 export default {
   name:'UploadFile',
   components:{
-    uploadFile
+    upload
   },
   data(){
     return {

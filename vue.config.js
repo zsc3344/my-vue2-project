@@ -31,7 +31,7 @@ module.exports = defineConfig({
   // 构建时开启多进程处理babel编译
   parallel: require('os').cpus().length > 1,
   devServer: {
-    port: 8080,
+    port: 8081,
     host:'127.0.0.1',
     open: true,
     allowedHosts: '*',

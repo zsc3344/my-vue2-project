@@ -7,6 +7,7 @@ import {
   Form,
   FormItem,
   Input,
+  InputNumber,
   Button,
   Upload,
   Menu,
@@ -19,7 +20,10 @@ import {
   Avatar,
   Dropdown,
   DropdownMenu,
-  DropdownItem
+  DropdownItem,
+  Dialog,
+  Col,
+  Row
 } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
 // 注册element-ui组件到Vue
@@ -38,7 +42,15 @@ Vue.use(Avatar)
 Vue.use(Dropdown)
 Vue.use(DropdownMenu)
 Vue.use(DropdownItem)
+Vue.use(Dialog)
+Vue.use(Col)
+Vue.use(Row)
+Vue.use(InputNumber)
+// 服务模式
+Vue.use(Loading)
+// 指令模式
+Vue.use(Loading.directive)
 /*  挂载element提示信息类型到vue原型上 */
-Vue.prototype.$loading = Loading.service;
-Vue.prototype.$msgbox = MessageBox;
-Vue.prototype.$message = Message;
+Vue.prototype.$loading = Loading.service
+Vue.prototype.$msgbox = MessageBox
+Vue.prototype.$message = Message
