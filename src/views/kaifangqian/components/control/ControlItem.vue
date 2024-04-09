@@ -26,6 +26,11 @@
 				element.controlClick?'click':'default']" v-if="element.type === 'seal'">
 					<img :src="'data:image/png;base64,'+element.value" style="pointer-events: none;"/>
 			</div>
+      <div ref="input" :class="['control-'+element.type,'control-item','arow-content',
+				element.controlClick?'click':'default']" v-if="element.type === 'inputArea'" @click="focusInput(element)">
+					<!-- <img :src="element.value" style="pointer-events: none;"/> -->
+          <div>{{ element.editInfo.label }}</div>
+			</div>
 			<div class="control-handles">
 				<div class="handle handle-top-left receive-color this-click"
 				v-on:mousedown.salf="controlZoomMousedown($event,element,1)"
@@ -105,6 +110,9 @@ export default {
   methods:{
     controlDelete(e){
       this.$emit('controlDelete',this.element)
+    },
+    focusInput(element){
+      this.$emit('focusInput',this.element)
     },
     clearSeal(){
       this.$emit('clearSeal',this.element)
@@ -415,6 +423,23 @@ export default {
 		}
 	}
 	.control-seal{
+		display: flex;
+		flex-direction: column;
+		text-align: center;
+		justify-content: center;
+		span{
+			display: block;
+			pointer-events: none;
+		}
+		span:nth-child(1){
+			height: 40px;
+			padding-top: 5px;
+		}
+		span:nth-child(2){
+			line-height: 30px;
+		}
+	}
+  .control-inputArea{
 		display: flex;
 		flex-direction: column;
 		text-align: center;

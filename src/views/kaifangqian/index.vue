@@ -16,14 +16,20 @@
                   <div>
                     <li class="unmover li-style" v-if="element.type== 'seal'">电子印章-{{element.user.userName?element.user.userName:'未制作印章'}}</li>
                     <li class="unmover li-style" v-if="element.type== 'signature'">手写签名-{{element.user.userName?element.user.userName:'未手写签名'}}</li>
+                    <li class="unmover li-style" v-else>{{element.title}}</li>
                     <li  :class="['li-entp-seal',controlClass(element)]">
                       <div class="entp-seal item" v-if="element.type== 'seal'" @click="openModal(element)">
                         <img :src="'data:image/png;base64,'+element.value" v-if="element.value"/>
                         <span v-else>请先制作印章</span>
                       </div>
                       <div class="person-seal item" v-if="element.type== 'signature'" @click="openModal(element)">
-                        <img :src="'data:image/png;base64,'+element.value" v-if="element.value"/>
+                        <img :src="'data:image/png;base64,'+element.value" v-if="element.value"/> 
                         <span v-else>请先设置手写签名</span>
+                      </div>
+                      <div class="inputArea-seal item" v-if="element.type == 'inputArea'">
+                        <!-- <input v-model="element.value" type="text"> -->
+                        <!-- <img :src="element.value" v-if="element.value"/>  -->
+                        <span>{{ element.name }}</span>
                       </div>
                     </li>
                   </div>
@@ -33,7 +39,7 @@
           </div>
         </div>
       </el-col>
-      <el-col :span="18" class="sign-content">
+      <el-col :span="16" class="sign-content">
         <c-scrollbar>
           <div class="document-content">
             <div class="document-list" :style="[
@@ -53,16 +59,28 @@
                 style="width: 100%;height: 100%;position: relative;" @change="dragChange">
                 <template v-for="item in documentPDF.control" >
                   <ControlItem :doc="item" :element="item" :isSign="false"
-                    @controlDelete="controlDelete" />
+                    @controlDelete="controlDelete" @focusInput="focusInput"/>
                 </template>
               </draggable>
             </div>
           </div>
          </c-scrollbar> 
       </el-col>
-      <el-col :span="3" style="margin-top:1%;padding: 0 10px;">
-        <div class="ele-control" style="margin-bottom:2%;">
-
+      <el-col :span="4" style="margin-top:1%;padding: 0 10px;">
+        <div class="config-area" style="margin-bottom:2%;">
+          <template v-if="currentFocusElement.editType && currentFocusElement.editType === 'input'">
+            <span>设置{{ currentFocusElement.title }}</span>
+            <div class="edit-area">
+              <el-form :model="currentFocusElement.editInfo" :rules="editRules" ref="ruleForm" label-position="top" label-width="100px" class="demo-ruleForm">
+                <el-form-item label="文本框名称" prop="label">
+                  <el-input v-model="currentFocusElement.editInfo.label"></el-input>
+                </el-form-item>
+                <el-form-item>
+                  <el-button type="primary" @click="submitForm('ruleForm')">保存为新定义控件</el-button>
+                </el-form-item>
+              </el-form>
+            </div>
+          </template>
         </div>
       </el-col>
     </el-row>
@@ -124,7 +142,14 @@ export default {
 				name: "itxst",
 				put: true, //允许拖入
 				pull:false, //允许拖出
-			}
+			},
+      currentFocusElement: {},
+      editRules: {
+        label: [
+          { required: true, message: '设置输入项名称(如甲方姓名等)', trigger: 'blur' },
+          { min: 2, max: 20, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+        ]
+      }
     }
   },
   created(){
@@ -143,6 +168,7 @@ export default {
     },
     //控件完成拖动触发事件
     controlsDragOver(e){
+      console.log('===this.documentPDF.control===', this.documentPDF.control)
       const moveTarget = this.documentPDF.control[e.newIndex];
       if(e.pullMode){
         const opt = {
@@ -165,6 +191,11 @@ export default {
         return item.uid !== element.uid 
       })
     },
+    // 鼠标点击在文档中的控件上
+    focusInput(element){
+      console.log('===element===', element)
+      this.currentFocusElement = {...element}
+    },
     /**
      * 判断控件的class  是否可进行拖动
      */
@@ -172,6 +203,8 @@ export default {
       if(element.type == 'seal' && this.signData.signType == 1 && this.thisControlList[0].value){
         return "control-move";
       }else if(element.type == 'signature' && this.signData.signType == 1 && this.thisControlList[1].value){
+        return  "control-move";
+      }else if(element.type == 'inputArea' && this.signData.signType == 1){
         return  "control-move";
       }else{
         return "control-disabled";
@@ -191,7 +224,7 @@ export default {
   // flex: 1;
   flex-direction: column;
   position: relative;
-  // background-color: #f8f8fa;
+  background-color: #f8f8fa;
   margin: auto;
   .row-container{
     height: 100%;
@@ -239,9 +272,15 @@ export default {
         text-align: left;
     }
   }
-  .ele-control {
-    text-align: center;
-    margin-top: 3%;
+  .config-area {
+    display: flex;
+    flex-direction: column;
+    .edit-area{
+      display: flex;
+      flex-direction: column;
+      background-color: #ffffff;
+      padding: 10px;
+    }
     .btn-outline-dark {
       color: #0f1531;
       background-color: transparent;
@@ -315,6 +354,20 @@ export default {
 		width: 160px;
 	}
 }
+.inputArea-seal{
+	width: 170px;
+	height: 80px;
+	border: 1px dashed #bbb;
+	background-color: #eee;
+	justify-content: center;
+	align-items: center;
+	display: flex;
+	padding: 5px;
+	user-select: none;
+	img{
+		width: 160px;
+	}
+}
 .drag-class .unmover,.ghost .unmover{
 	display: none !important;
 }
@@ -343,5 +396,10 @@ export default {
   .document-page{
     position: absolute;
   }
+}
+
+.custom-drag{
+  width: 150px;
+  height: 70px;
 }
 </style>
