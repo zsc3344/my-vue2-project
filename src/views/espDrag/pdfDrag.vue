@@ -79,7 +79,7 @@ export default {
 
                 let originPoint = ""
 
-                // 鼠标按钮并滑动鼠标整个过程
+                // 鼠标按下并滑动鼠标整个过程
                 function mouseDownAndMove (canvas, context, moveCall) {
                     // 鼠标按下
                     canvas.addEventListener("mousedown", event => {
@@ -96,7 +96,7 @@ export default {
                           originPoin  = getMousePos(res.canvas, event); // 获取起始点
                         }
                         canvas.addEventListener("mousemove", moveCall); // 开始移动鼠标了
-                    })
+                    })  
 
                     // 鼠标抬起
                     canvas.addEventListener("mouseup", event => {
@@ -445,8 +445,8 @@ export default {
 }
 .pdf-box {
   max-height: 98vh;
-  overflow: hidden;
-  overflow-y: auto;
+  //overflow: hidden;
+  //overflow-y: auto;
 }
 </style>
 

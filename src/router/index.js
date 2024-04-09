@@ -91,6 +91,12 @@ const constantRoutes = [
         name:'pdfDrag',
         meta:{title:'电子签约合同拖拽方案'},
         component:resolve => require(['@/views/espDrag/pdfSign.vue'], resolve)
+      },
+      {
+        path:'/kaifangqian',
+        name:'kaifangqian',
+        meta:{title:'开放签'},
+        component:resolve => require(['@/views/kaifangqian/index.vue'], resolve)
       }
     ]
   }

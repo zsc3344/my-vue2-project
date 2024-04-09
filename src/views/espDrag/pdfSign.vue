@@ -1,7 +1,7 @@
 <template>
   <div id="elesign" class="elesign">
-    <el-row>
-      <el-col :span="4" style="margin-top:1%;padding: 0 10px;">
+    <el-row class="row-container">
+      <el-col :span="3" style="margin-top:1%;padding: 0 10px;">
         <div class="left-title">我的印章</div>
         <draggable v-model="mainImagelist" :group="{ name: 'itext', pull: 'clone' }" :sort="false" @end="end">
           <transition-group type="transition">
@@ -11,7 +11,7 @@
           </transition-group>
         </draggable>
       </el-col>
-      <el-col :span="16" style="text-align:center;" class="pCenter">
+      <el-col :span="18" style="text-align:center;" class="pCenter">
         <div class="page">
           <!-- <el-button class="btn-outline-dark" @click="zoomIn">-</el-button>
           <span style="color:red;">{{(percentage*100).toFixed(0)+'%'}}</span>
@@ -22,11 +22,13 @@
           <el-input-number style="margin:0 5px;border-radius:5px;" class="btn-outline-dark"  v-model="pageNum" :min="1" :max="numPages" label="输入页码"></el-input-number>
           <el-button class="btn-outline-dark" @click="cutover">跳转</el-button>
         </div>
-        <canvas id="the-canvas" />
-        <!-- 盖章部分 -->
-        <canvas id="ele-canvas"></canvas>
+        <div id="pdf-container">
+          <canvas id="the-canvas" />
+          <!-- 盖章部分 -->
+          <canvas id="ele-canvas"></canvas>
+        </div>
       </el-col>
-      <el-col :span="4" style="margin-top:1%;padding: 0 10px;">
+      <el-col :span="3" style="margin-top:1%;padding: 0 10px;">
         <!-- <div class="task-info-box">
           <div class="left-title">任务信息</div>
           <div class="task-info">
@@ -56,6 +58,11 @@
         </div>
       </el-col>
     </el-row>
+    <div class="operate-box">
+      <el-button class="btn-outline-dark" @click="preStep()"> 上一步</el-button>
+      <el-button class="btn-outline-dark" @click="nextStep()"> 下一步</el-button>
+      <el-button class="btn-outline-dark" @click="saveTemplate()">保存模板</el-button>
+    </div>
   </div>
 </template>
 <script>
@@ -64,6 +71,9 @@ let pdfjsLib =require("pdfjs-dist/legacy/build/pdf.js")
 import workerSrc from "pdfjs-dist/legacy/build/pdf.worker.entry"
 pdfjsLib.GlobalWorkerOptions.workerSrc = workerSrc
 import draggable from "vuedraggable"
+import { canvasToPdf, imageToPdf, htmlToPdf } from '@/utils/util'
+import JsPDF from 'jspdf'
+import html2canvas from 'html2canvas';
 export default {
   components: {draggable},
   data() {
@@ -73,7 +83,7 @@ export default {
       pdfDoc: null,
       numPages: 1,
       pageNum: 1,
-      scale: 2.2,
+      scale: 2,
       pageRendering: false,
       pageNumPending: null,
       sealUrl: '',
@@ -84,6 +94,10 @@ export default {
       whDatas: null,
       mainImagelist: [],
       taskInfo: {},
+      // 保存为新的pdf
+      viewport: null,
+      originalViewPort: null,
+      newPdf:null
     }
   },
   computed: {
@@ -96,8 +110,6 @@ export default {
     that.mainImagelist = [require('@/assets/sign.png'),require('@/assets/seal.png')]
     that.taskInfo = {'title':'测试盖章', uname:'张三', endtime:'2021-09-01 17:59:59'}
     this.setPdfArea()
-
-    this.bodyScale()
     // 监听页面的窗口的变化，每次窗口变化调用等比例缩放方法
     window.addEventListener("resize", this.bodyScale, false)
     // Ctrl+鼠标滚轮缩放
@@ -109,15 +121,6 @@ export default {
     })
   },
   methods: {
-    // 等比例缩放的方法，可以放到VUE的method里 
-    bodyScale() {
-      this.clientWidth = document.documentElement.clientWidth;
-      var deviceWidth = document.documentElement.clientWidth; //获取当前分辨率下的可视区域宽度
-      var zoom = deviceWidth / 1920; // 分母——设计稿的尺寸
-      var scale = 1/(deviceWidth / 1920) // 放大缩小相应倍数
-      document.documentElement.style.zoom = zoom; //放大缩小相应倍数
-      document.documentElement.style.transform = scale; //放大缩小相应倍数
-    },
     //pdf预览
     // zoomIn() {
     //   console.log("缩小");
@@ -141,31 +144,7 @@ export default {
     //     this.renderFabric();
     //   }
     // },
-    renderPage(num) {
-      let _this = this
-      this.pageRendering = true
-      return this.pdfDoc.getPage(num).then((page) => {
-        let viewport = page.getViewport({ scale: _this.scale });//设置视口大小
-        _this.canvas.height = viewport.height
-        _this.canvas.width = viewport.width
-        
-        // Render PDF page into canvas context
-        let renderContext = {
-          canvasContext: _this.ctx,
-          viewport: viewport,
-        };
-        let renderTask = page.render(renderContext)
-        // Wait for rendering to finish
-        renderTask.promise.then(() => {
-          _this.pageRendering = false
-          if (_this.pageNumPending !== null) {
-            // New page rendering is pending
-            this.renderPage(_this.pageNumPending)
-            _this.pageNumPending = null
-          }
-        });
-      });
-    },
+    // 渲染队列
     queueRenderPage(num) {
       if (this.pageRendering) {
         this.pageNumPending = num
@@ -173,6 +152,35 @@ export default {
         this.renderPage(num)
       }
     },
+    // 渲染页面
+    renderPage(num) {
+      let _this = this
+      this.pageRendering = true
+      return this.pdfDoc.getPage(num).then((page) => {
+        this.originalViewPort = page.getViewport({ scale:1 })
+        console.log('===originalViewPort===', this.originalViewPort)
+        this.viewport = page.getViewport({ scale: _this.scale });//设置视口大小
+        _this.canvas.height = this.viewport.height
+        _this.canvas.width = this.viewport.width
+        
+        // 渲染pdf页面为canvas的context
+        let renderContext = {
+          canvasContext: _this.ctx,
+          viewport: this.viewport
+        };
+        let renderTask = page.render(renderContext)
+        // 等待渲染结束
+        renderTask.promise.then(() => {
+          _this.pageRendering = false
+          if (_this.pageNumPending !== null) {
+            // 新的页面渲染进程在等待中
+            this.renderPage(_this.pageNumPending)
+            _this.pageNumPending = null
+          }
+        });
+      });
+    },
+    // 上一页
     prevPage() {
       this.confirmSignature()
       if (this.pageNum <= 1) {
@@ -180,6 +188,7 @@ export default {
       }
       this.pageNum--
     },
+    // 下一页
     nextPage() {
       this.confirmSignature()
       if (this.pageNum >= this.numPages) {
@@ -187,8 +196,17 @@ export default {
       }
       this.pageNum++
     },
+    // 跳转
     cutover() {
       this.confirmSignature()
+    },
+    //设置PDF预览区域高度
+    setPdfArea(){
+      this.pdfUrl = 'https://bsl-dev.gdoss.xstore.ctyun.cn/signature/templateFile/20210906025716ssss.pdf'
+      // this.pdfurl= res.data.data.pdfurl
+      this.$nextTick(() => {
+        this.showpdf(this.pdfUrl) //接口返回的应该还有盖章信息，不只是pdf
+      })
     },
     //渲染pdf，到时还会盖章信息，在渲染时，同时显示出来，不应该在切换页码时才显示印章信息
     showpdf(pdfUrl) {
@@ -216,7 +234,7 @@ export default {
       })
     },
     /**
-   *  盖章部分开始
+   *  ====================盖章部分开始=======================
    */
     // 设置绘图区域宽高
     renderPdf(data) {
@@ -227,15 +245,19 @@ export default {
     renderFabric() {
       let canvaEle = document.querySelector("#ele-canvas")
       let pCenter=document.querySelector(".pCenter")
-      canvaEle.width = pCenter.clientWidth
+      canvaEle.width = this.whDatas.width
       // canvaEle.height = (this.whDatas.height)*(this.scale);
       canvaEle.height = this.whDatas.height
 
       this.canvasEle = new fabric.Canvas(canvaEle)
       let container = document.querySelector(".canvas-container")
       container.style.position = "absolute"
-      container.style.top = "50px"
-      // container.style.left = "30%";
+      container.style.top = "73px"
+      container.style.left = "50%"
+      container.style.transform = "translateX(-50%)"
+      container.style.width = this.canvas.width,
+      container.style.height = this.canvas.height,
+      container.style.zIndex = 2
     },
     // 相关事件操作哟
     canvasEvents() {
@@ -283,6 +305,7 @@ export default {
     },
     //翻页展示盖章信息
     commonSign(pageNum, isFirst = false) {
+      console.log('===111===')
       if(isFirst == false) this.canvasEle.remove(this.canvasEle.clear()) //清空页面所有签章
       let caches = JSON.parse(localStorage.getItem('signs')) //获取缓存字符串后转换为对象
       console.log(caches)
@@ -340,16 +363,56 @@ export default {
       localStorage.removeItem('signs') //清除缓存
     },
     end(e){
+      console.log('===this.mainImagelist===', this.mainImagelist)
       this.addSeal(this.mainImagelist[e.newDraggableIndex], e.originalEvent.layerX, e.originalEvent.layerY, e.newDraggableIndex)
     },
-    //设置PDF预览区域高度
-    setPdfArea(){
-       this.pdfUrl = 'https://bsl-dev.gdoss.xstore.ctyun.cn/signature/templateFile/20210906025716ssss.pdf'
-      //  this.pdfurl= res.data.data.pdfurl
-       this.$nextTick(() => {
-        console.log('===111===')
-         this.showpdf(this.pdfUrl) //接口返回的应该还有盖章信息，不只是pdf
-       })
+    // 上一步
+    preStep(){
+
+    },
+    // 下一步
+    nextStep(){
+
+    },
+    // 保存pdf
+    saveTemplate(){
+      this.newPdf = new JsPDF('landscape', 'pt', [this.originalViewPort.width, this.originalViewPort.height])
+      let newCanvas = document.createElement("canvas")
+      newCanvas.width = this.originalViewPort.width
+      newCanvas.height = this.originalViewPort.height
+      let saveCtx = newCanvas.getContext("2d")
+      // for(let i = 1; i<= this.pdfDoc.numPages; i++){
+      //   this.renderPage(i).then(() => {
+      //     this.renderPdf({
+      //       width: this.canvas.width,
+      //       height: this.canvas.height,
+      //     })
+      //   })
+      //   this.commonSign(i, true)
+      //   html2canvas(this.canvas).then(function(canvas) {
+      //     console.log('===canvas===', canvas)
+      //     saveCtx.drawImage(canvas, this.viewport.width, this.viewport.height)
+      //   })
+      //   html2canvas(this.canvasEle).then(function(canvas) {
+      //     console.log('===canvas===', canvas)
+      //     saveCtx.drawImage(canvas, this.viewport.width, this.viewport.height)
+      //   })
+      //   let imgUrl = newCanvas.toDataURL('image/jpeg')
+      //   imageToPdf(this.newPdf, imgUrl)
+      // }
+      // html2canvas(this.canvas).then(function(canvas) {
+      //   console.log('===canvas===', canvas)
+      //   saveCtx.drawImage(canvas, this.viewport.width, this.viewport.height)
+      // })
+      // html2canvas(this.canvasEle).then(function(canvas) {
+      //   console.log('===canvas===', canvas)
+      //   saveCtx.drawImage(canvas, this.viewport.width, this.viewport.height)
+      // })
+      // let imgUrl = newCanvas.toDataURL('image/jpeg')
+      // imageToPdf(this.newPdf, imgUrl)
+      // pdf-preview
+      let pdfContainer = document.getElementById('pdf-container')
+      htmlToPdf(pdfContainer, this.originalViewPort)
     }
   },
   watch: {
@@ -367,7 +430,7 @@ export default {
           this.renderFabric()
           this.canvasEvents()
           let eleCanvas=document.querySelector("#ele-canvas")
-          eleCanvas.style="border:1px solid #5ea6ef"
+          // eleCanvas.style="border:1px solid #5ea6ef"
         }
       },
     },
@@ -383,12 +446,14 @@ export default {
 /*pdf部分*/
 
 .pCenter{
-  overflow-x: hidden;
+  // overflow-x: hidden;
 }
 #the-canvas{
-  // width: 500px;
-  // height: 70vh;
-  // margin-top: 20px;
+  z-index: 1;
+  position: relative;
+}
+#save-canvas{
+  position: absolute;
 }
 
 html:fullscreen {
@@ -399,6 +464,7 @@ html:fullscreen {
     flex: 1;
     flex-direction: column;
     position: relative;
+    background-color: #f8f8fa;
     /* padding-left: 180px; */
     margin: auto;
     /* width:600px; */
@@ -409,7 +475,7 @@ html:fullscreen {
     margin-top: 1%;
 }
 #ele-canvas {
-  border: 1px solid #666666 !important;
+  // border: 1px solid #666666 !important;
   overflow: hidden;
   margin-top: 40px;
 }
@@ -506,5 +572,17 @@ li {
     color: #fff;
     background-color: #3e4b5b;
     border-color: #3e4b5b;
+}
+.row-container{
+  margin-bottom: 60px;
+}
+.operate-box{
+  // position: fixed;
+  // bottom: 0;left: 64px;right: 0;
+  height: 60px;
+  background-color: #fefefe;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 </style>

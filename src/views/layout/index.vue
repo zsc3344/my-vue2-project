@@ -63,6 +63,10 @@
             <i class="el-icon-stopwatch"></i>
             <span slot="title">电子签合同拖拽方案</span>
           </el-menu-item>
+          <el-menu-item index="10" route="/kaifangqian">
+            <i class="el-icon-stopwatch"></i>
+            <span slot="title">开放签方案</span>
+          </el-menu-item>
         </el-submenu>
       </el-menu>
     </div>
@@ -238,6 +242,9 @@ export default {
     overflow-y: auto;
     flex: 1;
     .top-container{
+      position: absolute;
+      top: 0;right: 0;
+      z-index: 1000;
       display: flex;
       flex-direction: row;
       justify-content: space-between;
@@ -260,6 +267,8 @@ export default {
     }
     .content-container{
       padding: 20px;
+      margin-top: 50px;
+      height: calc(100% - 50px);
     }
   }
 }
