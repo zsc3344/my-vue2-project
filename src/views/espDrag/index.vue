@@ -121,7 +121,6 @@ export default {
         // function mouseDownAndMove (canvas, context, moveCall) {
         //     // 鼠标按下
         //     canvas.addEventListener("mousedown", event => {
-        //       console.log('===111mousedown===')
         //         if (!self.prevCanvas[`canvas${res.index}`]) { // 没有存上一个状态的PDF的，要存一下
         //           self.prevCanvas[`canvas${res.index}`] = context.getImageData(0, 0, context.canvas.width, context.canvas.height);
         //         }
@@ -137,7 +136,6 @@ export default {
         //     })  
         //     // 鼠标抬起
         //     canvas.addEventListener("mouseup", event => {
-        //       console.log('===111mouseup===')
         //         context.putImageData(self.prevCanvas[`canvas${res.index}`], 0, 0); // 把上一个保存的PDF状态显示出来
 
         //         // 获取终止点，开始画矩形了
@@ -174,7 +172,6 @@ export default {
         //         for (let i = 0; i <= divList.length - 1; i++) {
         //             let div = divList[i];
         //             div.addEventListener("mousedown", ev => {
-        //               console.log('===222mousedown===')
         //                 let id = "";
         //                 let offsetX = ev.offsetX; // 距离div左边界的X轴距离
         //                 let offsetY = ev.offsetY; // 距离div上边界的y轴距离
@@ -205,7 +202,6 @@ export default {
         //                 div.addEventListener("mousemove", self.innerDivMouseDownAndMove); // 开始移动鼠标了
         //             })
         //             div.addEventListener("mouseup", ev => {
-        //               console.log('===222mouseup===')
         //                 let id = navigator.userAgent.indexOf("Firefox") > -1 ? ev.originalTarget.id : ev.toElement.id;
         //                 self.signatoryMouseUp({
         //                     x: self.mode === "pagingSeal" ? `${div.offsetWidth - 78}px` : document.getElementById(id).style.left,
@@ -214,7 +210,6 @@ export default {
         //                     res
         //                 });
         //                 self.isMove = false;
-        //                 console.log('===self.prevCanvas===', self.prevCanvas)
         //                 div.removeEventListener("mousemove", self.innerDivMouseDownAndMove);
         //             })
         //         }

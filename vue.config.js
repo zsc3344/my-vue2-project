@@ -4,10 +4,7 @@ const path = require('path')
 function resolve(dir) {
   return path.join(__dirname, dir)
 }
-console.log('===111===')
 const NODE_ENV = process.env.NODE_ENV
-console.log('===NODE_ENV===', NODE_ENV)
-console.log('===process.env.VUE_APP_BASE_URL===', process.env.VUE_APP_BASE_URL)
 const isProduction = NODE_ENV === 'production'?true: false
 
 const timeStamp = new Date().getTime

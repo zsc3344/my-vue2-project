@@ -97,6 +97,12 @@ const constantRoutes = [
         name:'kaifangqian',
         meta:{title:'开放签'},
         component:resolve => require(['@/views/kaifangqian/index.vue'], resolve)
+      },
+      {
+        path:'/webSpeechApi',
+        name:'webSpeechApi',
+        meta:{title:'语音监听并合成文字'},
+        component:resolve => require(['@/views/webSpeechApi/index.vue'], resolve)
       }
     ]
   }

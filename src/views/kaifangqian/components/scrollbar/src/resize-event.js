@@ -10,25 +10,25 @@ export const resizeHandler = (mutationsList, observer, element) => {
 };
 
 export const addResizeListener = (element, fn) => {
-  if (isServer) return;
+  if (isServer) return
   if (!element.resizeListners) {
-    element.resizeListners = [];
-    window.addEventListener('resize', fn);
-    const mutationObserverSupported = typeof MutationObserver !== 'undefined';
+    element.resizeListners = []
+    window.addEventListener('resize', fn)
+    const mutationObserverSupported = typeof MutationObserver !== 'undefined'
     if (mutationObserverSupported) {
-      element.observer = new MutationObserver((mutationsList, observer) => resizeHandler(mutationsList, observer, element));
+      element.observer = new MutationObserver((mutationsList, observer) => resizeHandler(mutationsList, observer, element))
       const config = {
         attributes: true,
         childList: true,
         subtree: true,
         characterData: true,
-      };
+      }
 
-      element.observer.observe(element, config);
+      element.observer.observe(element, config)
     }
   }
-  element.resizeListners.push(fn);
-};
+  element.resizeListners.push(fn)
+}
 
 export const removeResizeListener = (element, fn) => {
   if (!element || !element.resizeListners) return;

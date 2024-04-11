@@ -35,9 +35,9 @@
 </template>
 
 <script>
-import { onMounted, onUnmounted, reactive, ref, toRefs } from 'vue';
+import { onMounted, onUnmounted, reactive, ref, toRefs } from 'vue'
 import Bar from './Bar.vue';
-import { addResizeListener, removeResizeListener } from './resize-event';
+import { addResizeListener, removeResizeListener } from './resize-event'
 
 export default {
   name: 'c-scrollbar',
@@ -65,7 +65,7 @@ export default {
       type: String,
       default: 'always', // hover 鼠标移动上去显示 always 一直显示 none 不显示
     },
-    noresize: Boolean, // 如果 container 尺寸不会发生变化，最好设置它可以优化性能
+    noresize: false, // 如果 container 尺寸不会发生变化，最好设置它可以优化性能
     direction: {
       type: String,
       default: 'all', // all 横向 纵向 都出现滚动条 x 水平 y 垂直
@@ -118,8 +118,8 @@ export default {
         } else {
           this.hasHBar = false;
         }
-        state.vThumbHeight = heightPercentage < 100 ? `${heightPercentage}%` : '';
-        state.hThumbWidth = widthPercentage < 100 ? `${widthPercentage}%` : '';
+        this.state.vThumbHeight = heightPercentage < 100 ? `${heightPercentage}%` : '';
+        this.state.hThumbWidth = widthPercentage < 100 ? `${widthPercentage}%` : '';
       }
     },
     setScrollTop(value) {
@@ -129,18 +129,26 @@ export default {
       this.wrapRef.scrollLeft = value;
     }
   },
-  created(){
-    // if (!this.noresize) {
-    //   removeResizeListener(this.wrapRef, this.update());
-    // }
-  },
+  // created(){
+  //   this.wrapRef = this.$refs.wrapRef
+  //   this.update() // 初始化调用一次，计算滚动条默认高度
+	// 	if(!this.noresize) {
+	// 	  addResizeListener(this.wrapRef, this.update()) // 监听元素变化，如果容器DOM变化触发更新
+	// 	}
+  // },
   mounted(){
-    this.update(); // 初始化调用一次，计算滚动条默认高度
-		// if(!this.noresize) {
-		//   addResizeListener(this.wrapRef, this.update()); // 监听元素变化，如果容器DOM变化触发更新
-		// }
+    this.wrapRef = this.$refs.wrapRef
+    this.update() // 初始化调用一次，计算滚动条默认高度
+		if(!this.noresize) {
+		  addResizeListener(this.wrapRef, this.update) // 监听元素变化，如果容器DOM变化触发更新
+		}
+  },
+  unmounted() {
+    if (!this.noresize) {
+      removeResizeListener(this.wrapRef, this.update)
+    }
   }
-};
+}
 </script>
 
 <style lang="less">

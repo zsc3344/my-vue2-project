@@ -75,33 +75,33 @@ export default {
      */
     handleBarMouseDown(e) {
       const client = e[this.bar.client]; // 点击位置距客户端顶部或最左边的位置
-      const wrap = barRef.value.getBoundingClientRect()[this.bar.direction]; // 滚动轨道距顶部或最左边的位置
+      const wrap = this.barRef.value.getBoundingClientRect()[this.bar.direction]; // 滚动轨道距顶部或最左边的位置
       const offset = Math.abs(wrap - client); // 距离元素上或左边距的距离
-      const thumbHalf = thumbRef.value[this.bar.offset] / 2; // thumb一般的高度
+      const thumbHalf = this.thumbRef.value[this.bar.offset] / 2; // thumb一般的高度
       const $parentWrap = this.parentRef;
-      const thumbPosPercent = ((offset - thumbHalf) * 100) / barRef.value[this.bar.offset];
+      const thumbPosPercent = ((offset - thumbHalf) * 100) / this.barRef.value[this.bar.offset];
       $parentWrap[this.bar.scroll] = (thumbPosPercent * $parentWrap[this.bar.scrollSize]) / 100;
     },
         /**
      * 拖动过程中
      */
     handleThumbMove(e) {
-      if (!thumbDrag.value) {
+      if (!this.thumbDrag.value) {
         return;
       }
       const client = e[this.bar.client]; // 点击位置距客户端顶部或最左边的位置
-      const wrap = barRef.value.getBoundingClientRect()[this.bar.direction]; // 滚动轨道距顶部或最左边的位置
+      const wrap = this.barRef.value.getBoundingClientRect()[this.bar.direction]; // 滚动轨道距顶部或最左边的位置
       const offset = Math.abs(wrap - client); // 距离元素上或左边距的距离
-      const thumbHalf = thumbRef.value[this.bar.offset] / 2; // thumb一般的高度
+      const thumbHalf = this.thumbRef.value[this.bar.offset] / 2; // thumb一般的高度
       const $parentWrap = this.parentRef;
-      const thumbPosPercent = ((offset - thumbHalf) * 100) / barRef.value[this.bar.offset];
+      const thumbPosPercent = ((offset - thumbHalf) * 100) / this.barRef.value[this.bar.offset];
       $parentWrap[this.bar.scroll] = (thumbPosPercent * $parentWrap[this.bar.scrollSize]) / 100;
     },
         /**
      * 放开鼠标，拖动结束
      */
     hanldeThumbUp(event) {
-      thumbDrag.value = false;
+      this.thumbDrag.value = false;
       if (event.target) {
         document.removeEventListener('mousemove', handleThumbMove); // 注册在document上而不是event.target上是为了更流畅，为了解决鼠标滑动过快，滚动滑块跟不上，和未释放鼠标时，在滑块旁滚动的问题
         document.removeEventListener('mouseup', hanldeThumbUp);
@@ -113,7 +113,7 @@ export default {
      * 拖拽开始
      */
     startDrag(event) {
-      thumbDrag.value = true;
+      this.thumbDrag.value = true;
       if (event.target) {
         document.addEventListener('mousemove', handleThumbMove);
         document.addEventListener('mouseup', hanldeThumbUp);

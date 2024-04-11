@@ -158,7 +158,6 @@ export default {
       this.pageRendering = true
       return this.pdfDoc.getPage(num).then((page) => {
         this.originalViewPort = page.getViewport({ scale:1 })
-        console.log('===originalViewPort===', this.originalViewPort)
         this.viewport = page.getViewport({ scale: _this.scale });//设置视口大小
         _this.canvas.height = this.viewport.height
         _this.canvas.width = this.viewport.width
@@ -305,7 +304,6 @@ export default {
     },
     //翻页展示盖章信息
     commonSign(pageNum, isFirst = false) {
-      console.log('===111===')
       if(isFirst == false) this.canvasEle.remove(this.canvasEle.clear()) //清空页面所有签章
       let caches = JSON.parse(localStorage.getItem('signs')) //获取缓存字符串后转换为对象
       console.log(caches)
@@ -363,7 +361,6 @@ export default {
       localStorage.removeItem('signs') //清除缓存
     },
     end(e){
-      console.log('===this.mainImagelist===', this.mainImagelist)
       this.addSeal(this.mainImagelist[e.newDraggableIndex], e.originalEvent.layerX, e.originalEvent.layerY, e.newDraggableIndex)
     },
     // 上一步
@@ -390,22 +387,18 @@ export default {
       //   })
       //   this.commonSign(i, true)
       //   html2canvas(this.canvas).then(function(canvas) {
-      //     console.log('===canvas===', canvas)
       //     saveCtx.drawImage(canvas, this.viewport.width, this.viewport.height)
       //   })
       //   html2canvas(this.canvasEle).then(function(canvas) {
-      //     console.log('===canvas===', canvas)
       //     saveCtx.drawImage(canvas, this.viewport.width, this.viewport.height)
       //   })
       //   let imgUrl = newCanvas.toDataURL('image/jpeg')
       //   imageToPdf(this.newPdf, imgUrl)
       // }
       // html2canvas(this.canvas).then(function(canvas) {
-      //   console.log('===canvas===', canvas)
       //   saveCtx.drawImage(canvas, this.viewport.width, this.viewport.height)
       // })
       // html2canvas(this.canvasEle).then(function(canvas) {
-      //   console.log('===canvas===', canvas)
       //   saveCtx.drawImage(canvas, this.viewport.width, this.viewport.height)
       // })
       // let imgUrl = newCanvas.toDataURL('image/jpeg')

@@ -96,7 +96,6 @@ export default {
             userName:this.params.userName,
             password:this.params.password
           }).then(res => {
-            console.log('===res===', res)
             if(res && res.data && res.data.data){
               this.$message({
                 message: '登陆成功',

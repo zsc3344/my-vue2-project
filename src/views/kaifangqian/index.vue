@@ -1,7 +1,8 @@
 <template>
   <div id="elesign" class="elesign">
-    <el-row class="row-container">
-      <el-col :span="4" style="margin-top:1%;padding: 0 10px;">
+    <div class="row-container">
+      <!-- 左侧拖拽栏 -->
+      <div class="left-box" style="margin-top:1%;padding: 0 10px;">
         <div class="sign-signer">
           <div class="configure-title">
             <span>签署方</span>
@@ -38,11 +39,12 @@
             </ul>
           </div>
         </div>
-      </el-col>
-      <el-col :span="16" class="sign-content">
+      </div>
+      <!-- 中间文档内容，拖拽区域 -->
+      <div class="sign-content">
         <c-scrollbar>
           <div class="document-content">
-            <div class="document-list" :style="[
+            <div id="document-list" class="document-list" :style="[
               {'height': (CanvasZoom.height * documentPDF.images.length + documentPDF.images.length * 16) +'px'}
             ]" v-if="documentPDF && documentPDF.images">
               <template v-for="item in documentPDF.images">
@@ -55,7 +57,7 @@
                 item-key="uid"
                 :group="groupEnter" :force-fallback="true" chosen-class="chosenClass" animation="300"
                 :fallback-class="true" :fallback-on-body="true" :touch-start-threshold="50"
-                :fallback-tolerance="50" 
+                :fallback-tolerance="50"
                 style="width: 100%;height: 100%;position: relative;" @change="dragChange">
                 <template v-for="item in documentPDF.control" >
                   <ControlItem :doc="item" :element="item" :isSign="false"
@@ -65,8 +67,9 @@
             </div>
           </div>
          </c-scrollbar> 
-      </el-col>
-      <el-col :span="4" style="margin-top:1%;padding: 0 10px;">
+        </div>
+      <!-- 右侧编辑区域 -->
+      <div class="right-box" style="margin-top:1%;padding: 0 10px;">
         <div class="config-area" style="margin-bottom:2%;">
           <template v-if="currentFocusElement.editType && currentFocusElement.editType === 'input'">
             <span>设置{{ currentFocusElement.title }}</span>
@@ -82,8 +85,14 @@
             </div>
           </template>
         </div>
-      </el-col>
-    </el-row>
+      </div>
+    </div>
+    <!-- 底部操作区域 -->
+    <div class="operate-box">
+      <el-button class="btn-outline-dark" @click="preStep()"> 上一步</el-button>
+      <el-button class="btn-outline-dark" @click="nextStep()"> 下一步</el-button>
+      <el-button class="btn-outline-dark" @click="saveTemplate()">保存模板</el-button>
+    </div>
   </div>
 </template>
 <script>
@@ -95,6 +104,7 @@ import { CanvasZoom, controlList } from './components/control/data/ControlData'
 import {moveRange,currentPosition} from './components/control/data/ControlerMoveRange'
 import { controlArray } from './assets/control'
 import ControlItem from './components/control/ControlItem.vue'
+import { canvasToPdf, imageToPdf, MultiHtmlToCanvas } from '@/utils/util'
 
 export default {
   components: {
@@ -168,7 +178,6 @@ export default {
     },
     //控件完成拖动触发事件
     controlsDragOver(e){
-      console.log('===this.documentPDF.control===', this.documentPDF.control)
       const moveTarget = this.documentPDF.control[e.newIndex];
       if(e.pullMode){
         const opt = {
@@ -193,7 +202,6 @@ export default {
     },
     // 鼠标点击在文档中的控件上
     focusInput(element){
-      console.log('===element===', element)
       this.currentFocusElement = {...element}
     },
     /**
@@ -212,7 +220,19 @@ export default {
       //return  "control-move";
     },
     dragChange(event){
-      console.log('===event===', event)
+    },
+    // 上一步
+    preStep(){
+
+    },
+    // 下一步
+    nextStep(){
+
+    },
+    // 保存pdf
+    saveTemplate(){
+      let pdfContainer = document.getElementById('document-list')
+      MultiHtmlToCanvas(pdfContainer, this.CanvasZoom)
     }
   }
 }
@@ -228,71 +248,68 @@ export default {
   margin: auto;
   .row-container{
     height: 100%;
-    .left-title {
-      text-align:center;
-      padding-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+    .left-box{
+      width: 15%;
     }
-    li{
-      list-style-type:none;
-      padding: 10px;
-    }
-    .imgstyle{
-        vertical-align: middle;
-        width: 130px;
-        border: solid 1px #e8eef2;
-        background-repeat:no-repeat;
-    }
-    .right {
+    .sign-content{
+      // flex: 1;
+      width: 70%;
+      height: 96%;
+      min-width: 800px;
+      border-left: 1px solid #e3e3e3;
+      border-right: 1px solid #e3e3e3;
+      background-color: #f1f1f1;
+      padding: 20px 0;
+      box-sizing: border-box;
+      .document-content{
+        flex:1;
+        height: 100%;
+      }
+      .document-list{
+        position: relative;
+        margin: 0 auto;
+        width: 800px;
+      }
+      .document-page{
         position: absolute;
-        top: 7px;
-        right: -177px;
-        margin-top: 34px;
-        padding-top: 10px;
-        padding-bottom: 20px;
-        width: 152px;
+      }
     }
-    .right-item {
-        margin-bottom: 15px;
-        margin-left: 10px;
-    }
-    .right-item-title {
-        color: #777;
-        height: 20px;
-        line-height: 20px;
-        font-size: 12px;
-        font-weight: 400;
-        text-align: left !important;
-    }
-    .detail-item-desc {
-        color: #333;
-        line-height: 20px;
-        width: 100%;
-        font-size: 12px;
-        display: inline-block;
-        text-align: left;
+    .right-box{
+      width: 15%;
+      .config-area {
+        display: flex;
+        flex-direction: column;
+        .edit-area{ 
+          display: flex;
+          flex-direction: column;
+          background-color: #ffffff;
+          padding: 10px;
+        }
+        .btn-outline-dark {
+          color: #0f1531;
+          background-color: transparent;
+          background-image: none;
+          border:1px solid #3e4b5b;
+          margin: 10px;
+        }
+        .btn-outline-dark:hover {
+          color: #fff;
+          background-color: #3e4b5b;
+          border-color: #3e4b5b;
+        }
+      }
     }
   }
-  .config-area {
+  .operate-box{
+    position: absolute;
+    bottom: -20px;left: 0;right: 0;
+    height: 60px;
+    background-color: #fefefe;
     display: flex;
-    flex-direction: column;
-    .edit-area{
-      display: flex;
-      flex-direction: column;
-      background-color: #ffffff;
-      padding: 10px;
-    }
-    .btn-outline-dark {
-      color: #0f1531;
-      background-color: transparent;
-      background-image: none;
-      border:1px solid #3e4b5b;
-      margin: 10px;
-    }
-    .btn-outline-dark:hover {
-      color: #fff;
-      background-color: #3e4b5b;
-      border-color: #3e4b5b;
-    }
+    justify-content: flex-end;
+    align-items: center;
   }
 }
 
@@ -327,75 +344,52 @@ export default {
 }
 
 .entp-seal{
-	width: 170px;
-	height: 170px;
-	border: 1px dashed #bbb;
-	background-color: #eee;
-	justify-content: center;
-	align-items: center;
-	display: flex;
-	padding: 5px;
-	user-select: none;
-	img{
-		width: 160px;
-	}
+  width: 170px;
+  height: 170px;
+  border: 1px dashed #bbb;
+  background-color: #eee;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  padding: 5px;
+  user-select: none;
+  img{
+    width: 160px;
+  }
 }
 .person-seal{
-	width: 170px;
-	height: 80px;
-	border: 1px dashed #bbb;
-	background-color: #eee;
-	justify-content: center;
-	align-items: center;
-	display: flex;
-	padding: 5px;
-	user-select: none;
-	img{
-		width: 160px;
-	}
+  width: 170px;
+  height: 80px;
+  border: 1px dashed #bbb;
+  background-color: #eee;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  padding: 5px;
+  user-select: none;
+  img{
+    width: 160px;
+  }
 }
 .inputArea-seal{
-	width: 170px;
-	height: 80px;
-	border: 1px dashed #bbb;
-	background-color: #eee;
-	justify-content: center;
-	align-items: center;
-	display: flex;
-	padding: 5px;
-	user-select: none;
-	img{
-		width: 160px;
-	}
+  width: 170px;
+  height: 80px;
+  border: 1px dashed #bbb;
+  background-color: #eee;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  padding: 5px;
+  user-select: none;
+  img{
+    width: 160px;
+  }
 }
 .drag-class .unmover,.ghost .unmover{
-	display: none !important;
+  display: none !important;
 }
 .drag-class li,.ghost li{
-	list-style: none !important;
-}
-
-.sign-content{
-  flex: 1;
-  height: 100%;
-  min-width: 800px;
-  border-left: 1px solid #e3e3e3;
-  border-right: 1px solid #e3e3e3;
-  background-color: #f1f1f1;
-  padding: 4px 0 20px 0;
-  box-sizing: border-box;
-  .document-content{
-    flex:1;
-    height: 100%;
-  }
-  .document-list{
-    position: relative;
-    margin: 0 auto;
-    width: 800px;
-  }
-  .document-page{
-    position: absolute;
-  }
+  list-style: none !important;
 }
 
 .custom-drag{

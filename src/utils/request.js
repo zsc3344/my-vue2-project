@@ -31,7 +31,6 @@ service.interceptors.request.use(config => {
 
 // response响应拦截器
 service.interceptors.response.use(res => {
-  console.log('===res===', res)
   const code = res.data.code
   const msg = res.data.msg
   if(code !== 200){

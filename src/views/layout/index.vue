@@ -67,6 +67,10 @@
             <i class="el-icon-stopwatch"></i>
             <span slot="title">开放签方案</span>
           </el-menu-item>
+          <el-menu-item index="11" route="/webSpeechApi">
+            <i class="el-icon-stopwatch"></i>
+            <span slot="title">语音监听并合成文字</span>
+          </el-menu-item>
         </el-submenu>
       </el-menu>
     </div>
