@@ -103,6 +103,12 @@ const constantRoutes = [
         name:'webSpeechApi',
         meta:{title:'语音监听并合成文字'},
         component:resolve => require(['@/views/webSpeechApi/index.vue'], resolve)
+      },
+      {
+        path:'/diff',
+        name:'diff',
+        meta:{title:'diff插件比对使用'},
+        component:resolve => require(['@/views/diff/index.vue'], resolve)
       }
     ]
   }

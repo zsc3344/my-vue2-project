@@ -55,21 +55,31 @@
             <i class="el-icon-stopwatch"></i>
             <span slot="title">图片裁剪</span>
           </el-menu-item>
-          <el-menu-item index="8" route="/echarts">
+        </el-submenu>
+        <el-submenu index="8">
+          <template slot="title">
+            <i class="el-icon-goods"></i>
+            <span>前端方案调研</span>
+          </template>
+          <el-menu-item index="9" route="/echarts">
             <i class="el-icon-stopwatch"></i>
-            <span slot="title">Echarts</span>
+            <span slot="title">Echarts使用</span>
           </el-menu-item>
-          <el-menu-item index="9" route="/pdfDrag">
+          <el-menu-item index="10" route="/pdfDrag">
             <i class="el-icon-stopwatch"></i>
             <span slot="title">电子签合同拖拽方案</span>
           </el-menu-item>
-          <el-menu-item index="10" route="/kaifangqian">
+          <el-menu-item index="11" route="/kaifangqian">
             <i class="el-icon-stopwatch"></i>
             <span slot="title">开放签方案</span>
           </el-menu-item>
-          <el-menu-item index="11" route="/webSpeechApi">
+          <el-menu-item index="12" route="/webSpeechApi">
             <i class="el-icon-stopwatch"></i>
             <span slot="title">语音监听并合成文字</span>
+          </el-menu-item>
+          <el-menu-item index="13" route="/diff">
+            <i class="el-icon-stopwatch"></i>
+            <span slot="title">diff插件比对使用</span>
           </el-menu-item>
         </el-submenu>
       </el-menu>
