@@ -19,6 +19,9 @@
     <div class="charts-item">
       <abnormalLine></abnormalLine>
     </div>
+    <div class="charts-item">
+      <circleProgress></circleProgress>
+    </div>
   </div>
 </template>
 <script>
@@ -28,6 +31,7 @@ import lineDemo from './components/line.vue'
 import liquid from './components/liquid.vue'
 import doubleBar from './components/doubleBar.vue'
 import abnormalLine from './components/abnormalLine.vue'
+import circleProgress from './components/circleProgress.vue'
 export default {
   components:{
     basic,
@@ -35,7 +39,8 @@ export default {
     lineDemo,
     liquid,
     doubleBar,
-    abnormalLine
+    abnormalLine,
+    circleProgress
   },
   data() {
     return {

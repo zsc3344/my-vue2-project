@@ -10,9 +10,8 @@ export default {
       myChart: null,
       xData: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月"], // 两个echarts公用的x轴的数据
       yData: [10,20,30,40,50,60,70,80,90,100],
-      y1Data: [56, 64, 32, 58, 64, 76, 81,90,30,100], // 小件货物
-      // y2Data: [56, 64, 32, 58, 64, 76, 81], // 网点负荷
-      y3Data: [88, 99, 77, 100, 21, 66, 100,100,100,100], // 大件货物
+      y1Data: [56, 64, 32, 58, 64, 76, 81,90,30,100], // 岗外
+      y2Data: [88, 99, 77, 100, 21, 66, 100,100,100,100], // 灵工
     }
   },
   mounted() {
@@ -24,7 +23,7 @@ export default {
   methods: {
     // 入门示例
     basicFn(){
-      this.myChart = this.echarts.init(document.getElementById('line'), 'dark')
+      this.myChart = this.echarts.init(document.getElementById('line'))
       this.myChart.setOption(
         {
         color: ["#bfa", "#baf"], // 配置数据颜色
@@ -33,15 +32,47 @@ export default {
           {
             left: "14.5%",
             right: "12%",
-            top: "10%",
-            height: "32%",
+            top: "0%",
+            height: "18%",
+            borderWidth: 1,
+            borderColor:['#EAEAEF','#EAEAEF','#EAEAEF','#EAEAEF']
           },
           // 配置第二个折线图位置
           {
             left: "14.5%",
             right: "12%",
-            top: "60%",
-            height: "32%",
+            top: "18%",
+            height: "18%",
+            borderWidth: 1,
+            borderColor:['#EAEAEF','#EAEAEF','#EAEAEF','#EAEAEF']
+          },
+          // 配置第三个折线图位置
+          {
+            left: "14.5%",
+            right: "12%",
+            top: "36%",
+            height: "18%",
+            borderWidth: 1,
+            borderColor:['#EAEAEF','#EAEAEF','#EAEAEF','#EAEAEF']
+          },
+          // 配置第四个折线图位置
+          {
+            left: "14.5%",
+            right: "12%",
+            top: "54%",
+            height: "18%",
+            containerLabel:true,
+            borderWidth: 1,
+            borderColor:['#EAEAEF','#EAEAEF','#EAEAEF','#EAEAEF']
+          },
+          // 配置第五个折线图位置
+          {
+            left: "14.5%",
+            right: "12%",
+            top: "72%",
+            height: "18%",
+            borderWidth: 1,
+            borderColor:['#EAEAEF','#EAEAEF','#EAEAEF','#EAEAEF']
           },
         ],
         tooltip: {
@@ -122,61 +153,89 @@ export default {
             type: "category",
             scale: false,
             axisLabel: {
-              fontSize: 10,
+              show: false,
             },
             axisTick: {
-              alignWithLabel: true,
+              alignWithLabel: false,
+              show:false // 不显示坐标轴刻度线
             },
             splitLine: {
               show: false,
             },
             data: this.xData, //x轴时间的数据
           },
+          {
+            gridIndex: 2,
+            type: "category",
+            scale: false,
+            axisLabel: {
+              show: false,
+            },
+            axisTick: {
+              alignWithLabel: false,
+              show:false // 不显示坐标轴刻度线
+            },
+            splitLine: {
+              show: false,
+            },
+            data: this.xData, //x轴时间的数据
+          },
+          {
+            gridIndex: 3,
+            type: "category",
+            scale: false,
+            axisLabel: {
+              show: false,
+            },
+            axisTick: {
+              alignWithLabel: false,
+              show:false // 不显示坐标轴刻度线
+            },
+            splitLine: {
+              show: false,
+            },
+            data: this.xData, //x轴时间的数据
+          },
+          {
+            gridIndex: 4,
+            type: "category",
+            scale: false,
+            axisLabel: {
+              fontSize: 10,
+            },
+            axisTick: {
+              alignWithLabel: false,
+              show:false // 不显示坐标轴刻度线
+            },
+            splitLine: {
+              show: false,
+            },
+            data: this.xData, //x轴时间的数据
+          }
         ],
         yAxis: [
           {
             type: "value",
             name: "岗外",
             nameLocation: "center",
-            nameGap: 50,
+            nameRotate: 360,
+            nameGap: 20,
             nameTextStyle: {
               fontSize: 12,
               fontWeight: "500",
             },
             axisLine: {
-              show: false, // 不显示坐标轴线
-            },
-            axisLabel: {
-              show: true, // 不显示坐标轴上的文字
-            },
-            splitLine:{
-              show:false // 不显示网格线
-            },
-            axisTick:{
-              alignWithLabel: false,
-              show:false // 不显示坐标轴刻度线
-            },
-            scale: false,
-            boundaryGap: [0, "100%"],
-            splitLine: {
-              show: false,
-            },
-            data: this.yData
-          },
-          {
-            type: "value",
-            name: "",
-            nameLocation: "center",
-            nameGap: 42,
-            nameTextStyle: {
-              fontSize: 12,
-            },
-            axisTick:{
-              alignWithLabel: false,
-              show:false // 不显示坐标轴刻度线
+              show: true, // 不显示坐标轴线
             },
             axisLabel: {
               show: false, // 不显示坐标轴上的文字
+            },
+            splitLine:{
+              show:true // 不显示网格线
+            },
+            axisTick:{
+              alignWithLabel: false,
+              show:false // 不显示坐标轴刻度线
             },
             scale: false,
             boundaryGap: [0, "100%"],
@@ -189,10 +248,14 @@ export default {
             type: "value",
             name: "灵工",
             nameLocation: "center",
+            nameRotate: 360,
             gridIndex: 1,
-            nameGap: 30,
+            nameGap: 20,
             nameTextStyle: {
               fontSize: 12,
+            },
+            axisLine: {
+              show: true, // 不显示坐标轴线
             },
             axisTick:{
               alignWithLabel: false,
@@ -200,6 +263,9 @@ export default {
             },
             axisLabel: {
               show: false, // 不显示坐标轴上的文字
+            },
+            splitLine:{
+              show:true // 不显示网格线
             },
             scale: false,
             boundaryGap: [0, "100%"],
@@ -210,19 +276,26 @@ export default {
           },
           {
             type: "value",
-            name: "",
+            name: "BPO",
             nameLocation: "center",
-            gridIndex: 1,
-            nameGap: 42,
+            nameRotate: 360,
+            gridIndex: 2,
+            nameGap: 20,
+            nameTextStyle: {
+              fontSize: 12,
+            },
+            axisLine: {
+              show: true, // 不显示坐标轴线
+            },
             axisTick:{
               alignWithLabel: false,
               show:false // 不显示坐标轴刻度线
             },
-            nameTextStyle: {
-              fontSize: 12,
-            },
             axisLabel: {
               show: false, // 不显示坐标轴上的文字
+            },
+            splitLine:{
+              show:true // 不显示网格线
             },
             scale: false,
             boundaryGap: [0, "100%"],
@@ -231,6 +304,66 @@ export default {
             },
             data: this.yData
           },
+          {
+            type: "value",
+            name: "RPO",
+            nameLocation: "center",
+            nameRotate: 360,
+            gridIndex: 3,
+            nameGap: 20,
+            nameTextStyle: {
+              fontSize: 12,
+            },
+            axisLine: {
+              show: true, // 不显示坐标轴线
+            },
+            axisTick:{
+              alignWithLabel: false,
+              show:false // 不显示坐标轴刻度线
+            },
+            axisLabel: {
+              show: false, // 不显示坐标轴上的文字
+            },
+            splitLine:{
+              show:true // 不显示网格线
+            },
+            scale: false,
+            boundaryGap: [0, "100%"],
+            splitLine: {
+              show: false,
+            },
+            data: this.yData
+          },
+          {
+            type: "value",
+            name: "ITO",
+            nameLocation: "center",
+            nameRotate: 360,
+            gridIndex: 4,
+            nameGap: 20,
+            nameTextStyle: {
+              fontSize: 12,
+            },
+            axisLine: {
+              show: true, // 不显示坐标轴线
+            },
+            axisTick:{
+              alignWithLabel: false,
+              show:false // 不显示坐标轴刻度线
+            },
+            axisLabel: {
+              show: false, // 不显示坐标轴上的文字
+            },
+            splitLine:{
+              show:true // 不显示网格线
+            },
+            scale: false,
+            boundaryGap: [0, "100%"],
+            splitLine: {
+              show: false,
+            },
+            data: this.yData
+          }
         ],
         series: [
           {
@@ -245,9 +378,33 @@ export default {
             name: "大件货物",
             type: "line",
             xAxisIndex: 1,
+            yAxisIndex: 1,
+            hoverAnimation: true, // 悬浮的动画加上
+            data: this.y2Data, //大件货物
+          },
+          {
+            name: "大件货物",
+            type: "line",
+            xAxisIndex: 2,
             yAxisIndex: 2,
             hoverAnimation: true, // 悬浮的动画加上
-            data: this.y3Data, //大件货物
+            data: this.y2Data, //大件货物
+          },
+          {
+            name: "大件货物",
+            type: "line",
+            xAxisIndex: 3,
+            yAxisIndex: 3,
+            hoverAnimation: true, // 悬浮的动画加上
+            data: this.y2Data, //大件货物
+          },
+          {
+            name: "大件货物",
+            type: "line",
+            xAxisIndex: 4,
+            yAxisIndex: 4,
+            hoverAnimation: true, // 悬浮的动画加上
+            data: this.y2Data, //大件货物
           }
         ],
       }
