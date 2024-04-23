@@ -185,7 +185,7 @@ export default {
     // 使用 web-worker 计算文件 hash
     calculateHash(fileChunkList) {
       return new Promise(resolve => {
-        this.container.worker = new Worker("/hash.js");
+        this.container.worker = new Worker("./hash.js");
         this.container.worker.postMessage({ fileChunkList });
         this.container.worker.onmessage = e => {
           const { percentage, hash } = e.data;
@@ -216,7 +216,7 @@ export default {
       );
       if (!shouldUpload) {
         this.$message.success(
-          "skip upload：file upload success, check /target directory"
+          "文件已存在，无需上传：此文件此前已上传成功, 查看 /target 目录"
         );
         this.status = Status.wait;
         return;
@@ -277,7 +277,7 @@ export default {
           filename: this.container.file.name
         })
       });
-      this.$message.success("upload success, check /target directory");
+      this.$message.success("上传成功, 查看 /target 目录");
       this.status = Status.wait;
     },
     // 根据 hash 验证文件是否曾经已经被上传过
