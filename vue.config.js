@@ -106,6 +106,11 @@ module.exports = defineConfig({
   chainWebpack:config => {
     config.resolve.alias // 添加别名
       .set('@assets',resolve('src/assets'))
+    // config.module
+    //   .rule('worker')
+    //   .test(/\.worker\.js$/)
+    //   .use('worker')
+    //   .loader('worker-loader')
     // 对图片文件进行压缩
     // config.plugins.delete('prefetch')
     // config.module.rule('images')

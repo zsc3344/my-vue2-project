@@ -22,6 +22,36 @@
           <i class="el-icon-s-home"></i>
           <span slot="title">首页</span>
         </el-menu-item>
+        <el-submenu index="8">
+          <template slot="title">
+            <i class="el-icon-goods"></i>
+            <span>前端方案调研</span>
+          </template>
+          <el-menu-item index="9" route="/echarts">
+            <i class="el-icon-stopwatch"></i>
+            <span slot="title">Echarts使用</span>
+          </el-menu-item>
+          <el-menu-item index="10" route="/pdfDrag">
+            <i class="el-icon-stopwatch"></i>
+            <span slot="title">电子签合同拖拽方案</span>
+          </el-menu-item>
+          <el-menu-item index="11" route="/kaifangqian">
+            <i class="el-icon-stopwatch"></i>
+            <span slot="title">开放签方案</span>
+          </el-menu-item>
+          <el-menu-item index="12" route="/webSpeechApi">
+            <i class="el-icon-stopwatch"></i>
+            <span slot="title">语音监听并合成文字</span>
+          </el-menu-item>
+          <el-menu-item index="13" route="/diff">
+            <i class="el-icon-stopwatch"></i>
+            <span slot="title">diff插件比对使用</span>
+          </el-menu-item>
+          <el-menu-item index="14" route="/largeFileUpload">
+            <i class="el-icon-stopwatch"></i>
+            <span slot="title">大文件切片上传</span>
+          </el-menu-item>
+        </el-submenu>
         <el-submenu index="1">
           <template slot="title">
             <i class="el-icon-goods"></i>
@@ -54,32 +84,6 @@
           <el-menu-item index="7" route="/cropperImage">
             <i class="el-icon-stopwatch"></i>
             <span slot="title">图片裁剪</span>
-          </el-menu-item>
-        </el-submenu>
-        <el-submenu index="8">
-          <template slot="title">
-            <i class="el-icon-goods"></i>
-            <span>前端方案调研</span>
-          </template>
-          <el-menu-item index="9" route="/echarts">
-            <i class="el-icon-stopwatch"></i>
-            <span slot="title">Echarts使用</span>
-          </el-menu-item>
-          <el-menu-item index="10" route="/pdfDrag">
-            <i class="el-icon-stopwatch"></i>
-            <span slot="title">电子签合同拖拽方案</span>
-          </el-menu-item>
-          <el-menu-item index="11" route="/kaifangqian">
-            <i class="el-icon-stopwatch"></i>
-            <span slot="title">开放签方案</span>
-          </el-menu-item>
-          <el-menu-item index="12" route="/webSpeechApi">
-            <i class="el-icon-stopwatch"></i>
-            <span slot="title">语音监听并合成文字</span>
-          </el-menu-item>
-          <el-menu-item index="13" route="/diff">
-            <i class="el-icon-stopwatch"></i>
-            <span slot="title">diff插件比对使用</span>
           </el-menu-item>
         </el-submenu>
       </el-menu>
@@ -248,7 +252,7 @@ export default {
     height: 100%;
     background-color: #363636;
   }
-  ::v-deep .el-menu {
+  :deep(.el-menu) {
     border-right: none;
   }
   .right-container{
@@ -287,21 +291,21 @@ export default {
   }
 }
 
-::v-deep .el-dropdown-menu{
+:deep(.el-dropdown-menu){
   padding: 0px !important;
   margin: 0px !important;
   background-color: #ecf5ff !important;
 }
-::v-deep .el-dropdown-menu__item{
+:deep(.el-dropdown-menu__item){
   padding: 0px !important;
   margin: 0px !important;
   background-color: #ecf5ff !important;
 }
-::v-deep .el-dropdown-menu__item:hover {
+:deep(.el-dropdown-menu__item):hover {
   background-color: #ebeffe !important;
   color: #000000 !important;
 }
-::v-deep .dropdown-box{
+:deep(.dropdown-box){
   width: 120px;
   height: 50px;
   padding: 0 10px !important;

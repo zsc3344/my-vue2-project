@@ -23,7 +23,10 @@ import {
   DropdownItem,
   Dialog,
   Col,
-  Row
+  Row,
+  Progress,
+  Table,
+  TableColumn
 } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
 // 注册element-ui组件到Vue
@@ -46,6 +49,9 @@ Vue.use(Dialog)
 Vue.use(Col)
 Vue.use(Row)
 Vue.use(InputNumber)
+Vue.use(Progress)
+Vue.use(Table)
+Vue.use(TableColumn)
 // 服务模式
 Vue.use(Loading)
 // 指令模式

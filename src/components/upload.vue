@@ -135,10 +135,10 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-::v-deep .el-upload-dragger{
+:deep(.el-upload-dragger){
   height: 150px !important;
 }
-::v-deep .el-upload-list__item:hover{
+:deep(.el-upload-list__item):hover{
   background-color: #F9F9F9;
   .el-icon-close::before{
     border-radius: 9px;

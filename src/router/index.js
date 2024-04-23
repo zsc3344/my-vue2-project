@@ -109,6 +109,12 @@ const constantRoutes = [
         name:'diff',
         meta:{title:'diff插件比对使用'},
         component:resolve => require(['@/views/diff/index.vue'], resolve)
+      },
+      {
+        path:'/largeFileUpload',
+        name:'largeFileUpload',
+        meta:{title:'大文件切片上传'},
+        component:resolve => require(['@/views/largeFileUpload/index.vue'], resolve)
       }
     ]
   }

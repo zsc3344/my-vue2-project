@@ -394,7 +394,7 @@ export default {
     align-items: center;
   }
 }
-::v-deep .canvas {
+:deep(.canvas) {
   margin-bottom: 10px;
   border: solid 1px #333;
 }

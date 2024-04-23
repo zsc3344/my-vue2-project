@@ -9,7 +9,7 @@ export default {
   props: {
     percentValue: {
       type: String | Number,
-      default: 30
+      default: 80
     }
   },
   data() {
