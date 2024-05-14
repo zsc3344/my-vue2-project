@@ -1,6 +1,6 @@
 <template>
   <div class="breadcumb">
-      <el-breadcrumb separator-class="el-icon-arrow-right">
+      <el-breadcrumb separator="|">
         <el-breadcrumb-item v-for="(item,index) in getBreadList" :key="index" :to="{ path: item.path }">{{item.meta.title}}</el-breadcrumb-item>
       </el-breadcrumb>
     </div>

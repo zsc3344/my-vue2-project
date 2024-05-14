@@ -260,7 +260,7 @@ export default {
     overflow-y: auto;
     flex: 1;
     .top-container{
-      position: absolute;
+      position: sticky;
       top: 0;right: 0;
       z-index: 1000;
       display: flex;
@@ -285,7 +285,7 @@ export default {
     }
     .content-container{
       padding: 20px;
-      margin-top: 50px;
+      // margin-top: 50px;
       height: calc(100% - 50px);
     }
   }
