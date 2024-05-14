@@ -178,14 +178,14 @@ export default {
       while (cur < file.size) {
         fileChunkList.push({ file: file.slice(cur, cur + size) });
         cur += size;
-      }
+      } 
       return fileChunkList;
     },
     // 生成文件 hash（web-worker）
     // 使用 web-worker 计算文件 hash
     calculateHash(fileChunkList) {
       return new Promise(resolve => {
-        this.container.worker = new Worker("./hash.js");
+        this.container.worker = new Worker("/hash.js");
         this.container.worker.postMessage({ fileChunkList });
         this.container.worker.onmessage = e => {
           const { percentage, hash } = e.data;

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <div class="title">Echarts图标的使用</div>  
     <div class="charts-item">
       <basic></basic>
@@ -77,11 +77,16 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.container{
+  margin: 20px;
+}
 .title{
   font-size: 20px;
   margin-bottom: 30px;
 }
 .charts-item{
-  margin: 10px;
+  margin: 20px;
+  padding: 10px;
+  border: solid 1px #ccc;
 }
 </style>

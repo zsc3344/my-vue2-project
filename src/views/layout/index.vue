@@ -25,7 +25,7 @@
         <el-submenu index="8">
           <template slot="title">
             <i class="el-icon-goods"></i>
-            <span>前端方案调研</span>
+            <span>功能库</span>
           </template>
           <el-menu-item index="9" route="/echarts">
             <i class="el-icon-stopwatch"></i>
