@@ -28,7 +28,7 @@
             <span>功能库</span>
           </template>
           <el-menu-item index="9" route="/echarts">
-            <i class="el-icon-stopwatch"></i>
+            <i class="el-icon-s-data"></i>
             <span slot="title">Echarts使用</span>
           </el-menu-item>
           <el-menu-item index="10" route="/pdfDrag">
