@@ -85,6 +85,10 @@
             <i class="el-icon-stopwatch"></i>
             <span slot="title">图片裁剪</span>
           </el-menu-item>
+          <el-menu-item index="8" route="/downloadAnimation">
+            <i class="el-icon-stopwatch"></i>
+            <span slot="title">下载动画</span>
+          </el-menu-item>
         </el-submenu>
       </el-menu>
     </div>

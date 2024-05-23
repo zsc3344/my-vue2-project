@@ -81,9 +81,15 @@ const constantRoutes = [
         component:resolve => require(['@/views/cropperImage/index.vue'], resolve)
       },
       {
+        path:'/downloadAnimation',
+        name:'downloadAnimation',
+        meta:{title:'下载动画'},
+        component:resolve => require(['@/views/downloadAnimation/index.vue'], resolve)
+      },
+      {
         path:'/echarts',
         name:'echarts',
-        meta:{title:'ECharts图标'},
+        meta:{title:'ECharts图表'},
         component:resolve => require(['@/views/echarts/index.vue'], resolve)
       },
       {
