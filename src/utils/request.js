@@ -12,11 +12,10 @@ let baseUrl = ''
 if(NODE_ENV === 'development'){
   baseUrl = 'http://127.0.0.1:7001/api'
 }
-
 // 创建axios实例
 const service = axios.create({
   // axios中请求配置有baseURL选项，表示请求URL公共部分
-  baseURL:baseUrl,
+  baseURL: baseUrl,
   // 超时
   timeout:60000
 })

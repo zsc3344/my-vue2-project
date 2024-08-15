@@ -1,3 +1,12 @@
+export const ControlType = {
+	Signature: "signature",
+	Seal: "seal",
+	// LineText = "line-text",
+	// MultilineText = "multiline-text",
+	// Date="date",
+	// SignDate="sign-date",
+	// Number = "number",
+}
 export const CanvasZoom = {
 	space:16,
 	width:800,

@@ -35,12 +35,12 @@ module.exports = defineConfig({
     hot: true,
     proxy:'http://localhost:8080'
     // proxy:{
-    //   ["/img"]: {
-    //     target: 'https://www.baidu.com',
-    //     changeOrigin: true,
-    //     pathRewrite: {
-    //       '^/img': ''
-    //     }
+    //   ['/openSign']: {
+    //     target: 'http://192.168.48.40:8666',
+    //     changeOrigin: true
+    //     // pathRewrite: {
+    //     //   ['^' + process.env.VUE_APP_BASE_URL]: ''
+    //     // }
     //   }
     // }
   },

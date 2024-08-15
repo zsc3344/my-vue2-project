@@ -47,14 +47,14 @@
           <el-input v-model="formData3.content1" type="textarea" placeholder="请输入"></el-input>
           <div v-if="diffResult3.length > 0" class="diff-result-item">
             <span>结果一：</span>
-            <div class="diff-char">{{ diffResult3[0].value }}</div>
+            <div class="diff-char">{{ diffResult3[0] }}</div>
           </div>
         </el-form-item>
         <el-form-item class="form-item" label="输入二:">
           <el-input v-model="formData3.content2" type="textarea" placeholder="请输入"></el-input>
           <div v-if="diffResult3.length > 0" class="diff-result-item">
             <span>结果二：</span>
-            <div class="diff-char">{{ diffResult3[1].value }}</div>
+            <div class="diff-char">{{ diffResult3[1] }}</div>
           </div>
         </el-form-item>
       </el-form>

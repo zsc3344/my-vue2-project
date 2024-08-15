@@ -175,8 +175,8 @@ export default {
 
   }
   .login-box{
-    width: 400px;
-    height: 300px;
+    width: 500px;
+    height: 350px;
     margin: 0 auto;
     background: #FFFFFF;
     box-shadow: 0px 1px 17px rgba(208, 214, 230, 0.4);
@@ -197,14 +197,14 @@ export default {
     margin-top: 40px;
     width: 100%;
     .btn {
+      width: 400px;
       height: 50px;
       line-height: 50px;
       font-size: 15px;
       margin-bottom: 15px;
       border-radius: 5px;
       color: #ffffff;
-      border-color: #2F68FA;
-      background-color: #2F68FA;
+      background-color: cornflowerblue;
       padding: 0 19px;
       display: flex;
       justify-content: center;

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "vue-cli-service serve --open --mode dev",
+    "dev": "vue-cli-service serve --open --mode development",
     "build": "vue-cli-service build --report",
     "lint": "vue-cli-service lint"
   },
@@ -23,6 +23,7 @@
     "multiparty": "^4.2.3",
     "node-sass": "^7.0.3",
     "pdfjs-dist": "^2.16.105",
+    "postcss-loader": "^8.1.1",
     "qrcode": "^1.5.3",
     "sass-loader": "^13.0.2",
     "vue": "^2.6.14",

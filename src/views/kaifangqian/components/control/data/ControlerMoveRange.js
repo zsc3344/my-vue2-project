@@ -25,7 +25,9 @@ export function currentPosition(top,pageSize){
 }
 //将每页的位置转换成为一大页的位置
 export function currentPositionReverse (top,pageSize){
-	return top + (pageSize + 1) * CanvasZoom.space + pageSize * CanvasZoom.height;
+  // 在之前的代码基础上，删除了增加页码高度和空隙高度的代码，用户回显控件时正常显示
+  // 	return top + (pageSize + 1) * CanvasZoom.space + pageSize * CanvasZoom.height;
+	return top;
 }
 
 //计算控件所在的页面
