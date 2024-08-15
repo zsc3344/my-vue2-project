@@ -105,6 +105,12 @@ const constantRoutes = [
         component:resolve => require(['@/views/kaifangqian/index.vue'], resolve)
       },
       {
+        path:'/tempDrag',
+        name:'tempDrag',
+        meta:{title:'模板拖拽'},
+        component:resolve => require(['@/views/addDragTemplate/index.vue'], resolve)
+      },
+      {
         path:'/webSpeechApi',
         name:'webSpeechApi',
         meta:{title:'语音监听并合成文字'},

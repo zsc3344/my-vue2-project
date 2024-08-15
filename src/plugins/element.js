@@ -8,6 +8,9 @@ import {
   FormItem,
   Input,
   InputNumber,
+  Image,
+  Select,
+  Option,
   Button,
   Upload,
   Menu,
@@ -26,7 +29,11 @@ import {
   Row,
   Progress,
   Table,
-  TableColumn
+  TableColumn,
+  Tooltip,
+  Tabs,
+  TabPane,
+  Checkbox
 } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
 // 注册element-ui组件到Vue
@@ -35,6 +42,9 @@ Vue.use(BreadcrumbItem)
 Vue.use(Form)
 Vue.use(FormItem)
 Vue.use(Input)
+Vue.use(Select)
+Vue.use(Image)
+Vue.use(Option)
 Vue.use(Button)
 Vue.use(Upload)
 Vue.use(Menu)
@@ -52,6 +62,10 @@ Vue.use(InputNumber)
 Vue.use(Progress)
 Vue.use(Table)
 Vue.use(TableColumn)
+Vue.use(Tooltip)
+Vue.use(Tabs)
+Vue.use(TabPane)
+Vue.use(Checkbox)
 // 服务模式
 Vue.use(Loading)
 // 指令模式

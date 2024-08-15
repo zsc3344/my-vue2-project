@@ -39,15 +39,19 @@
             <i class="el-icon-stopwatch"></i>
             <span slot="title">开放签方案</span>
           </el-menu-item>
-          <el-menu-item index="12" route="/webSpeechApi">
+          <el-menu-item index="12" route="/tempDrag">
+            <i class="el-icon-stopwatch"></i>
+            <span slot="title">模板拖拽</span>
+          </el-menu-item>
+          <el-menu-item index="13" route="/webSpeechApi">
             <i class="el-icon-stopwatch"></i>
             <span slot="title">语音监听并合成文字</span>
           </el-menu-item>
-          <el-menu-item index="13" route="/diff">
+          <el-menu-item index="14" route="/diff">
             <i class="el-icon-stopwatch"></i>
             <span slot="title">diff插件比对使用</span>
           </el-menu-item>
-          <el-menu-item index="14" route="/largeFileUpload">
+          <el-menu-item index="15" route="/largeFileUpload">
             <i class="el-icon-stopwatch"></i>
             <span slot="title">大文件切片上传</span>
           </el-menu-item>

@@ -1,5 +1,6 @@
 import html2canvas from 'html2canvas';
 import JsPDF from 'jspdf';
+import { Message } from 'element-ui'
 
 // 生成多页pdf
 export function MultiHtmlToCanvas(pdfContainer, viewPort){
@@ -80,4 +81,48 @@ export function htmlToPdf(pdfContainer, viewPort){
     // 保存PDF文档，自动触发下载
     pdf.save(`默认文件名.pdf`)
   })
+}
+
+// 模板列表弹框下载方法
+export async function downloadFileForTemp(fileOrUrl, fileName, ext) {
+  let file = null, extraName = ext
+
+  if(typeof(fileOrUrl) === 'string') {
+    const { ext, data } = await http.get(fileOrUrl, { responseType: 'blob' })
+    file = data
+    !extraName && (extraName = ext)
+  } else {
+    file = fileOrUrl.data
+    !extraName && (extraName = fileOrUrl.ext)
+  }
+
+  if(file.type.includes('json')) {
+    const reader = new FileReader()
+    reader.readAsText(file)
+    reader.onload = () => {
+      const res = JSON.parse(reader.result)
+      Message.error(res.message)
+    }
+    return
+  }
+
+
+  if(navigator.msSaveOrOpenBlob) {
+    return window.navigator.msSaveOrOpenBlob(file, `${fileName}`)
+  }
+
+  if ('download' in document.createElement('a')) {
+    const downloadElement = document.createElement('a')
+    let href = ''
+    if (window.URL) href = window.URL.createObjectURL(file)
+    else href = window.webkitURL.createObjectURL(file)
+    downloadElement.href = href
+    downloadElement.download = `${fileName}`
+    document.body.appendChild(downloadElement)
+    downloadElement.click()
+    if (window.URL) window.URL.revokeObjectURL(href)
+    else window.webkitURL.revokeObjectURL(href)
+    document.body.removeChild(downloadElement)
+    return
+  }
 }
