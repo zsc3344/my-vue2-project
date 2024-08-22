@@ -111,7 +111,7 @@
       <!-- 中间文档内容，拖拽区域 -->
       <div class="sign-content" id="sign-content" ref="sign-content">
         <c-scrollbar>
-          <div class="document-content">
+          <div class="document-content" ref="document-content">
             <div id="document-list" class="document-list" :style="[
               {'height': (CanvasZoom.height * documentPDF.images.length + documentPDF.images.length * 16) +'px'}
               ]" v-if="documentPDF && documentPDF.images">
@@ -465,7 +465,7 @@ export default {
     // 监听签署文件滚动和结束
     signScrollTop:{
       handler(newVal, oldVal){
-        const signDom = this.$refs['sign-content']
+        const signDom = document.getElementsByClassName('c-scrollbar-wrap')[0]
         const previewDom = this.$refs['preview-content']
         setTimeout(() => {
           if(newVal == signDom.scrollTop) { //延时执行后当newValue等于window.scrollY，代表滚动结束
@@ -476,14 +476,14 @@ export default {
           }
         }, 20) //必须使用延时器，否则每次newValue和window.scrollY都相等，无法判断，20ms刚好大于watch的侦听周期，故延时20ms
         if(this.oldSignScrollTop == oldVal) { //每次滚动开始时oldScrollTop与oldValue相等
-          // console.log('滚动开始')
+          console.log('滚动开始')
         }
       }
     },
     // 监听预览文件滚动和结束
     previewScrollTop:{
       handler(newVal, oldVal){
-        const signDom = this.$refs['sign-content']
+        const signDom = document.getElementsByClassName('c-scrollbar-wrap')[0]
         const previewDom = this.$refs['preview-content']
         setTimeout(() => {
           if(newVal == previewDom.scrollTop) { //延时执行后当newValue等于window.scrollY，代表滚动结束
@@ -575,7 +575,7 @@ export default {
     }
   },
   mounted(){
-    const signDom = this.$refs['sign-content']
+    const signDom = document.getElementsByClassName('c-scrollbar-wrap')[0]
     const previewDom = this.$refs['preview-content']
     this.signScrollHeight = signDom.scrollHeight
     this.previewScrollHeight = previewDom.scrollHeight
@@ -1618,7 +1618,7 @@ export default {
     },
     // 点击预览页面，联动左侧签署文件页面滚动
     clickPreviewPage(index){
-      const signDom = this.$refs['sign-content']
+      const signDom = document.getElementsByClassName('c-scrollbar-wrap')[0]
       const previewDom = this.$refs['preview-content']
       this.currentPageIndex = index
       if(index === 0){
@@ -1644,43 +1644,37 @@ export default {
 
     // 签署文件区域：滚动条联动
     handleSignScroll(){
-      const signDom = this.$refs['sign-content']
+      const signDom = document.getElementsByClassName('c-scrollbar-wrap')[0]
+      console.log('===signDom.scrollTop===', signDom.scrollTop)
       const previewDom = this.$refs['preview-content']
       if(previewDom){
         previewDom.removeEventListener('scroll', this.handlePreviewScroll, true)
         this.signScrollTop = signDom.scrollTop
         this.getCurrentPage()
         let percent = this.signScrollTop/(this.signScrollHeight - signDom.clientHeight)
-        // setTimeout(() => {
-        //   previewDom.scrollTo({
-        //     top: (this.previewScrollHeight - previewDom.clientHeight) * percent,
-        //     left:0
-        //   })
-        // }, 20)
-        previewDom.scrollTo({
-          top: (this.previewScrollHeight - previewDom.clientHeight) * percent,
-          left:0
-        })
+        setTimeout(() => {
+          previewDom.scrollTo({
+            top: (this.previewScrollHeight - previewDom.clientHeight) * percent,
+            left:0
+          })
+        }, 20)
       }
     },
     handlePreviewScroll(){
       if(this.draggedControlOperateType === 'preview') {
-        const signDom = this.$refs['sign-content']
+        const signDom = document.getElementsByClassName('c-scrollbar-wrap')[0]
         const previewDom = this.$refs['preview-content']
+        console.log('===previewDom.scrollTop===', previewDom.scrollTop)
         signDom.removeEventListener('scroll', this.handleSignScroll, true)
         this.previewScrollTop = previewDom.scrollTop
         this.getPreviewCurrentPage()
         let percent = this.previewScrollTop/(this.previewScrollHeight - previewDom.clientHeight)
-        // setTimeout(() => {
-        //   signDom.scrollTo({
-        //     top: (this.signScrollHeight - signDom.clientHeight) * percent,
-        //     left:0
-        //   })
-        // }, 20)
-        signDom.scrollTo({
-          top: (this.signScrollHeight - signDom.clientHeight) * percent,
-          left:0
-        })
+        setTimeout(() => {
+          signDom.scrollTo({
+            top: (this.signScrollHeight - signDom.clientHeight) * percent,
+            left:0
+          })
+        }, 20)
       }
     },
     // 判断签署文件滚动条当前处于第几页
@@ -1861,6 +1855,11 @@ export default {
       display: flex;
       flex-direction: column;
       align-items: center;
+      // &::-webkit-scrollbar{
+      //   width:5px;
+      //   height:16px;
+      //   background-color: rgba(0, 0, 0, 0.2);
+      // }
       .right-title{
         margin-bottom: 10px;
         height: 20px;

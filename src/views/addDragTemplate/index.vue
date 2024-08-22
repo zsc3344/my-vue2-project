@@ -116,55 +116,6 @@ export default {
         }
       }
     }
-  },
-  beforeRouteLeave (to, from, next) {
-    if(!this.clickChangeTenantBtnStatus){
-      if(['add','edit'].includes(this.operateType)){
-        if(!this.submitStatusForTempConfig){
-          if(this.$refs.dragTemp){
-            this.$confirm('是否保存当前配置为草稿？若选择保存，则系统记录该草稿，若不保存，则系统不保存该条数据。','提示',{
-              distinguishCancelAndClose: true, // 区分取消与关闭
-              confirmButtonText: "直接退出",
-              cancelButtonText: "保存并退出",
-              type: "warning"
-            }).then(async () => {
-                // 此处直接退出
-                this.$store.commit('SET_STEP_INFO_FOR_TEMP_CONFIG', null)
-                this.$store.commit('SET_DOCUMENT_PDF_FOR_TEMP_CONFIG', null)
-                next()
-            }).catch((action) => {
-              if(action === 'cancel'){
-                // 此处需要保存第一步、第二步配置信息为草稿,然后退出
-                this.$refs.dragTemp.saveTemplateForDraft({
-                  saveType: 'draft'
-                })
-              }
-            })
-          }else{
-            this.$confirm('模板配置未完成，是否放弃本次修改直接退出？','提示',{
-              confirmButtonText: "直接退出",
-              cancelButtonText: "取消",
-              type: "warning"
-            }).then(async () => {
-              // 此处直接退出
-              this.$store.commit('SET_STEP_INFO_FOR_TEMP_CONFIG', null)
-              this.$store.commit('SET_DOCUMENT_PDF_FOR_TEMP_CONFIG', null)
-              next()
-            }).catch(() => {
-              
-            })
-          }
-        }else{
-          this.$store.commit('SET_STEP_INFO_FOR_TEMP_CONFIG', null)
-          this.$store.commit('SET_DOCUMENT_PDF_FOR_TEMP_CONFIG', null)
-          next()
-        }
-      }else{
-        this.$store.commit('SET_STEP_INFO_FOR_TEMP_CONFIG', null)
-        this.$store.commit('SET_DOCUMENT_PDF_FOR_TEMP_CONFIG', null)
-        next()
-      }
-    }
   }
 }
 </script>
