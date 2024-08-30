@@ -127,6 +127,12 @@ const constantRoutes = [
         name:'largeFileUpload',
         meta:{title:'大文件切片上传'},
         component:resolve => require(['@/views/largeFileUpload/index.vue'], resolve)
+      },
+      {
+        path:'/combinePdf',
+        name:'combinePdf',
+        meta:{title:'合并pdf'},
+        component:resolve => require(['@/views/pdf/combinePdf.vue'], resolve)
       }
     ]
   }

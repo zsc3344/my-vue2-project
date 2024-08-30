@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>PDF合并</title>
+    <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+  </head>
+  <body>
+    <div class="file-container">
+      <input type="file" id="fileInput" multiple />
+      <div class="file-list">
+        <p>文件列表：</p>
+      </div>
+      <button onclick="previewMergePDF()">预览合并的PDF</button>
+      <button onclick="downloadMergePDF()">下载合并的PDF</button>
+    </div>
+    <script>
+      document.getElementById("fileInput").addEventListener("change",function () {
+        const fileInput = document.getElementById("fileInput")
+        const files = fileInput.files
+        if (files.length < 2) {
+          alert("请至少选择两个PDF文件进行合并！")
+          return;
+        }else{
+          for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            const fileName = file.name;
+            const fileSize = file.size;
+            const fileType = file.type;
+            const fileItem = document.createElement("div");
+            fileItem.className = "file-item";
+            fileItem.innerHTML = `文件名：${fileName}<br>文件大小：${fileSize}字节<br>文件类型：${fileType}`
+            document.querySelector(".file-list").appendChild(fileItem);
+          }
+        }
+      })
+      async function previewMergePDF() {
+        const fileInput = document.getElementById("fileInput");
+        const files = fileInput.files;
+        if (files.length < 2) {
+          alert("请至少选择两个PDF文件进行合并！");
+          return;
+        }
+        // 创建一个新的PDF文档
+        const mergedPdf = await PDFLib.PDFDocument.create();
+        // 遍历选择的每个文件
+        for (let i = 0; i < files.length; i++) {
+          const file = files[i];
+          const reader = new FileReader();
+          // 读取文件内容
+          const fileContents = await new Promise((resolve, reject) => {
+            reader.onload = function (event) {
+              resolve(event.target.result);
+            };
+            reader.onerror = function (event) {
+              reject(new Error("文件读取错误。"));
+            };
+            reader.readAsArrayBuffer(file);
+          });
+          // 将PDF文件添加到合并的PDF文档中
+          const pdf = await PDFLib.PDFDocument.load(fileContents);
+          const copiedPages = await mergedPdf.copyPages(
+            pdf,
+            pdf.getPageIndices()
+          );
+          copiedPages.forEach((page) => {
+            mergedPdf.addPage(page);
+          });
+        }
+        // 使用浏览器自带预览功能，预览合并后的PDF
+        const mergedPdfBytes = await mergedPdf.save();
+        const mergedPdfBlob = new Blob([mergedPdfBytes], {
+          type: "application/pdf",
+        });
+        const fileURL = URL.createObjectURL(mergedPdfBlob);
+        window.open(fileURL);
+      }
+      async function downloadMergePDF() {
+        const fileInput = document.getElementById("fileInput");
+        const files = fileInput.files;
+        if (files.length < 2) {
+          alert("请至少选择两个PDF文件进行合并！");
+          return;
+        }
+        const mergedPdf = await PDFLib.PDFDocument.create();
+        for (let i = 0; i < files.length; i++) {
+          const file = files[i];
+          const reader = new FileReader();
+          const fileContents = await new Promise((resolve, reject) => {
+            reader.onload = function (event) {
+              resolve(event.target.result);
+            };
+            reader.onerror = function (event) {
+              reject(new Error("文件读取错误。"));
+            };
+            reader.readAsArrayBuffer(file);
+          });
+          const pdf = await PDFLib.PDFDocument.load(fileContents);
+          const copiedPages = await mergedPdf.copyPages(
+            pdf,
+            pdf.getPageIndices()
+          );
+          copiedPages.forEach((page) => {
+            mergedPdf.addPage(page);
+          });
+        }
+        const mergedPdfFile = await mergedPdf.saveAsBase64();
+        const downloadLink = document.createElement("a");
+        downloadLink.href = "data:application/pdf;base64," + mergedPdfFile;
+        downloadLink.download = "pdf合并文件.pdf";
+        downloadLink.click();
+      }
+    </script>
+  </body>
+  <style>
+    /* .file-container{
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    } */
+    #fileInput{
+      margin-top: 20px;
+    }
+      .file-list{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin: 5px 0 20px 0;
+      }
+      .file-item{
+        width: 80%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: solid 1px #f2f2f2;
+      }
+  </style>
+</html>
+
