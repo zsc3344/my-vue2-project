@@ -246,6 +246,17 @@ export default {
     }
   }
   .el-menu-vertical-demo{
+    overflow-x: hidden;
+    overflow-y: auto;
+    &::-webkit-scrollbar {
+      width: 5px;
+      height: 20px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color:#444445;
+      border-radius: 10px;
+      height: 20px;
+    }
     .link-name{
       color: #ffffff;
       text-decoration: none;
