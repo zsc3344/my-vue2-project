@@ -87,6 +87,12 @@ const constantRoutes = [
         component:resolve => require(['@/views/downloadAnimation/index.vue'], resolve)
       },
       {
+        path:'/clock',
+        name:'clock',
+        meta:{title:'动态时钟'},
+        component:resolve => require(['@/views/clock/index.vue'], resolve)
+      },
+      {
         path:'/echarts',
         name:'echarts',
         meta:{title:'ECharts图表'},

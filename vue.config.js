@@ -101,7 +101,8 @@ module.exports = defineConfig({
               }
           }
       }
-  }
+    },
+    config.devtool="source-map"
   },
   chainWebpack:config => {
     config.resolve.alias // 添加别名

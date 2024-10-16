@@ -97,6 +97,10 @@
             <i class="el-icon-stopwatch"></i>
             <span slot="title">下载动画</span>
           </el-menu-item>
+          <el-menu-item index="9" route="/clock">
+            <i class="el-icon-stopwatch"></i>
+            <span slot="title">动态时钟</span>
+          </el-menu-item>
         </el-submenu>
       </el-menu>
     </div>
