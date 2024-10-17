@@ -92,29 +92,33 @@ export default {
         if (valid) {
           this.isloading = this.loadingShow();
           // this.checkpassword()
-          login({
-            userName:this.params.userName,
-            password:this.params.password
-          }).then(res => {
-            if(res && res.data && res.data.data){
-              this.$message({
-                message: '登陆成功',
-                type: 'success'
-              })
-              localStorage.setItem('token', res.data.data.token)
-              this.$store.dispatch('user/setUserInfo', res.data.data)
-              this.isloading().close;
-              this.$router.push('/home')
-            }else{
-              this.$message({
-                message: '登陆失败,请重新登陆',
-                type: 'error'
-              })
-              this.isloading().close;
-            }
-          }).catch(error => {
-            this.isloading().close;
-          })
+          // login({
+          //   userName:this.params.userName,
+          //   password:this.params.password
+          // }).then(res => {
+          //   if(res && res.data && res.data.data){
+          //     this.$message({
+          //       message: '登陆成功',
+          //       type: 'success'
+          //     })
+          //     localStorage.setItem('token', res.data.data.token)
+          //     this.$store.dispatch('user/setUserInfo', res.data.data)
+          //     this.isloading().close;
+          //     this.$router.push('/home')
+          //   }else{
+          //     this.$message({
+          //       message: '登陆失败,请重新登陆',
+          //       type: 'error'
+          //     })
+          //     this.isloading().close;
+          //   }
+          // }).catch(error => {
+          //   this.isloading().close;
+          // })
+          if(this.params.userName === 'admin' && this.params.password === '123456'){
+            this.isloading().close
+            this.$router.push('/home')
+          }
         }else{
           this.$message.error('请输入密码！')
         }
