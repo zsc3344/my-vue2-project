@@ -1,5 +1,5 @@
 <template>
-  <div class="clock-container">
+  <div class="clock-container" ref="clock" @click="fullScreen">
     <div class="clock">
       <!-- 中心点 start -->
       <div class="origin"></div>
@@ -7,6 +7,10 @@
       <!-- 刻度 start -->
       <ul class="clock-line">
         <template v-for="(item, index) in 60">
+          <li v-if="index % 5 == 0" :style="{ 'transform':  `rotate(${index * 6}deg) translateY(-110px)`}" class="number">
+            <!-- 添加时钟数字 -->
+            <span :style="{ 'transform':  `rotate(${- index * 6}deg)`}" class="clock-number">{{index/5}}</span>
+          </li>
           <li v-if="index % 5 == 0" :style="{ 'transform':  `rotate(${index * 6}deg) translateY(-110px)`}" class="special"></li>
           <li v-else :style="{ 'transform':  `rotate(${index * 6}deg) translateY(-110px)`}"></li>
         </template>
@@ -24,6 +28,7 @@
   </div>
 </template>
 <script>
+import screenfull from "screenfull"
 export default {
   data(){
     return {
@@ -55,8 +60,14 @@ export default {
       this.minsDegress = mins * 6 + 90
       //读取时
       var hours = now.getHours();
-      console.log(hours);
       this.hoursDegress = hours * 30 + 90 + (mins / 60) * 30
+    },
+    fullScreen() {
+      // if (screenfull.isEnabled && !screenfull.isFullscreen) {
+      //   // screenfull.request()
+      //   screenfull.toggle(document.body);
+      // }
+      screenfull.toggle(this.$refs.clock);
     }
   }
 }
@@ -70,7 +81,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgb(233, 233, 233);
+  // background: rgb(233, 233, 233);
 }
 .clock {
   position: relative;
@@ -79,7 +90,7 @@ export default {
   border-radius: 50%;
   border: 7px solid #505050;
   background-color: #e7e7e7;   
-  background: radial-gradient(circle at 35% 35%, #fff, rgba(212, 212, 212, 0.7), rgba(255, 255, 255, 1)); 
+  background: radial-gradient(circle at 50% 50%, #fff, rgba(212, 212, 212, 0.7), rgba(255, 255, 255, 1)); 
   box-shadow: inset 0px 0px 12px rgba(0, 0, 0, 0.3),0px 8px 12px rgba(0, 0, 0, 0.3);
   .label-info{ 
     position: absolute;
@@ -112,6 +123,11 @@ export default {
         width: 2px;
         height: 8px;
         background: #333;
+      }
+      .clock-number{
+        display: inline-block;
+        margin: 12px 0px 0 -4px;
+        font-size: 12px;
       }
   }
   // 表圆心
