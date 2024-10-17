@@ -115,10 +115,32 @@ export default {
           // }).catch(error => {
           //   this.isloading().close;
           // })
-          if(this.params.userName === 'admin' && this.params.password === '123456'){
+          // if(this.params.userName === 'admin' && this.params.password === '123456'){
+          //   localStorage.setItem('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImNocmlzIiwiaWF0IjoxNzE5NTc0NzYwLCJleHAiOjE3MTk2NjExNjB9.8IoQf3g5XDPzuaj5veXz7pAhKm8bet49eIAW4Z7T8Ag')
+          //   this.$store.dispatch('user/setUserInfo', {
+          //     "userName": "chris",
+          //     "name": "张上川",
+          //     "age": 33,
+          //     "gender": "男",
+          //     "avatarUrl": "https://jrit-zl-test-1302914566.cos.ap-guangzhou.myqcloud.com/sit/2023-10-19/1697698956763-%E5%A4%A7%E9%9B%84.png",
+          //     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImNocmlzIiwiaWF0IjoxNzE5NTc0NzYwLCJleHAiOjE3MTk2NjExNjB9.8IoQf3g5XDPzuaj5veXz7pAhKm8bet49eIAW4Z7T8Ag"
+          //   })
+          //   this.isloading().close
+          //   this.$router.push('/home')
+          // }
+          localStorage.setItem('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImNocmlzIiwiaWF0IjoxNzE5NTc0NzYwLCJleHAiOjE3MTk2NjExNjB9.8IoQf3g5XDPzuaj5veXz7pAhKm8bet49eIAW4Z7T8Ag')
+          this.$store.dispatch('user/setUserInfo', {
+            "userName": "chris",
+            "name": "张上川",
+            "age": 33,
+            "gender": "男",
+            "avatarUrl": "https://jrit-zl-test-1302914566.cos.ap-guangzhou.myqcloud.com/sit/2023-10-19/1697698956763-%E5%A4%A7%E9%9B%84.png",
+            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImNocmlzIiwiaWF0IjoxNzE5NTc0NzYwLCJleHAiOjE3MTk2NjExNjB9.8IoQf3g5XDPzuaj5veXz7pAhKm8bet49eIAW4Z7T8Ag"
+          })
+          setTimeout(() => {
             this.isloading().close
             this.$router.push('/home')
-          }
+          }, 2000)
         }else{
           this.$message.error('请输入密码！')
         }
