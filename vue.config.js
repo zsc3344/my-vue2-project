@@ -11,7 +11,7 @@ const timeStamp = new Date().getTime
 
 module.exports = defineConfig({
   // 基本路径 整个文件夹所在
-  publicPath: process.env.NODE_ENV === 'production' ? './' : '/',
+  publicPath: process.env.NODE_ENV === 'production' ? '/my-vue2-project/' : '/',
   filenameHashing: false,
   // 输出文件目录 文件夹名
   outputDir: 'dist',
