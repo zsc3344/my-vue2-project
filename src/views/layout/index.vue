@@ -161,10 +161,17 @@ export default {
   },
   computed:{
     userInfo(){
-      return JSON.parse(localStorage.getItem('userInfo'))
+      return JSON.parse(localStorage.getItem('userInfo')) || {
+        "userName": "chris",
+        "name": "张上川",
+        "age": 33,
+        "gender": "男",
+        "avatarUrl": "https://jrit-zl-test-1302914566.cos.ap-guangzhou.myqcloud.com/sit/2023-10-19/1697698956763-%E5%A4%A7%E9%9B%84.png",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImNocmlzIiwiaWF0IjoxNzE5NTc0NzYwLCJleHAiOjE3MTk2NjExNjB9.8IoQf3g5XDPzuaj5veXz7pAhKm8bet49eIAW4Z7T8Ag"
+      }
     },
     userName(){
-      return JSON.parse(localStorage.getItem('userInfo')).name
+      return JSON.parse(localStorage.getItem('userInfo')).name || '张上川'
     },
     isLoading(){
       return store.getters.loading
