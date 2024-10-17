@@ -72,9 +72,6 @@ export default {
   justify-content: center;
   background: rgb(233, 233, 233);
 }
-// *{
-//   box-sizing: border-box;
-// }
 .clock {
   position: relative;
   width: 280px;
