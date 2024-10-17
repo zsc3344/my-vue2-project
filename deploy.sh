@@ -14,6 +14,6 @@ git add -A
 git commit -m 'deploy'
 
 # 如果发布到 https://<USERNAME>.github.io/<REPO>
-git push -f git@github.com:zsc3344/my-vue2-project.git master:vue2-pages
+git push -f git@github.com:zsc3344/my-vue2-project.git master:gh-pages
 
 cd -
