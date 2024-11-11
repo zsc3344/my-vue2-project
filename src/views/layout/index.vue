@@ -59,6 +59,10 @@
             <i class="el-icon-stopwatch"></i>
             <span slot="title">pdf合并</span>
           </el-menu-item>
+          <el-menu-item index="17" route="/vue-draggable-resize">
+            <i class="el-icon-stopwatch"></i>
+            <span slot="title">vue-draggable-resize插件使用</span>
+          </el-menu-item>
         </el-submenu>
         <el-submenu index="1">
           <template slot="title">
