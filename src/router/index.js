@@ -141,9 +141,9 @@ const constantRoutes = [
         component:resolve => require(['@/views/pdf/combinePdf.vue'], resolve)
       },
       {
-        path:'/vue-draggable-resize',
-        name:'vue-draggable-resize',
-        meta:{title:'合并pdf'},
+        path:'/vue-draggable-resizable',
+        name:'vue-draggable-resizable',
+        meta:{title:'vue-draggable-resizable插件使用'},
         component:resolve => require(['@/views/vue-draggable-resize/index.vue'], resolve)
       }
     ]
