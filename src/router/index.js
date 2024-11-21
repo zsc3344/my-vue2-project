@@ -145,6 +145,12 @@ const constantRoutes = [
         name:'vue-draggable-resizable',
         meta:{title:'vue-draggable-resizable插件使用'},
         component:resolve => require(['@/views/vue-draggable-resize/index.vue'], resolve)
+      },
+      {
+        path:'/driverjs',
+        name:'driverjs',
+        meta:{title:'页面引导driver.js使用'},
+        component:resolve => require(['@/views/driverjs/index.vue'], resolve)
       }
     ]
   }

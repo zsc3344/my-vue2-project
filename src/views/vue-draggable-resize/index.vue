@@ -32,7 +32,7 @@
           :snap="true"
           :snap-tolerance="5"
           :maximize="true"
-          :grid="[1,1]"
+          :grid="[5,5]"
           :draggable="true"
           drag-handle=".draggable"
         >
@@ -135,6 +135,9 @@ export default {
       }
     }
     .parent-class{
+      display: grid;
+      grid-template-columns: 5px 5px 5px;
+      grid-template-rows: 5px 5px 5px;
       height: 700px; 
       width: 100%; 
       border: 1px solid red; 
