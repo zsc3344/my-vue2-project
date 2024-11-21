@@ -32,6 +32,7 @@ const constantRoutes = [
     // 路由懒加载：路由配置如下，使用 resolve ，这样打包可以给每个页面单独生成一个js文件，从而减小访问页面时的体积，加快加载速度
     component: resolve => require(['@/views/layout/index.vue'],resolve),
     children: [
+      // 组件库
       {
         path:'/home',
         name:'home',
@@ -92,6 +93,13 @@ const constantRoutes = [
         meta:{title:'动态时钟'},
         component:resolve => require(['@/views/clock/index.vue'], resolve)
       },
+      {
+        path:'/wangEditor',
+        name:'wangEditor',
+        meta:{title:'wangEditor编辑器'},
+        component:resolve => require(['@/views/wangEditor/index.vue'], resolve)
+      },
+      // 功能库
       {
         path:'/echarts',
         name:'echarts',

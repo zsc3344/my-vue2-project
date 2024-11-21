@@ -109,6 +109,10 @@
             <i class="el-icon-stopwatch"></i>
             <span slot="title">动态时钟</span>
           </el-menu-item>
+          <el-menu-item index="19" route="/wangEditor">
+            <i class="el-icon-stopwatch"></i>
+            <span slot="title">wangEditor编辑器</span>
+          </el-menu-item>
         </el-submenu>
       </el-menu>
     </div>
