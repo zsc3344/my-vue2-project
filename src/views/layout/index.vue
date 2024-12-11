@@ -67,6 +67,10 @@
             <i class="el-icon-stopwatch"></i>
             <span slot="title">页面引导driver.js使用</span>
           </el-menu-item>
+          <el-menu-item index="19" route="/pictureToPicture">
+            <i class="el-icon-stopwatch"></i>
+            <span slot="title">前端画中画实现</span>
+          </el-menu-item>
         </el-submenu>
         <el-submenu index="1">
           <template slot="title">

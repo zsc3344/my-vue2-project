@@ -159,6 +159,12 @@ const constantRoutes = [
         name:'driverjs',
         meta:{title:'页面引导driver.js使用'},
         component:resolve => require(['@/views/driverjs/index.vue'], resolve)
+      },
+      {
+        path:'/pictureToPicture',
+        name:'pictureToPicture',
+        meta:{title:'前端画中画实现'},
+        component:resolve => require(['@/views/pictureToPicture/index.vue'], resolve)
       }
     ]
   }
