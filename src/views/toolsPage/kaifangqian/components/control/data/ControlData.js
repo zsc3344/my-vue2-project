@@ -97,7 +97,7 @@ export const controlList = [
     "type":"inputArea",
     "editType":"input",
     "placeholder":"",
-    "value": require("@/views/kaifangqian/assets/images/input.png"),
+    "value": require("@/views/toolsPage/kaifangqian/assets/images/input.png"),
     "zoom":false,
     "move":true,
     "size":{

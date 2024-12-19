@@ -18,106 +18,30 @@
           <img class="logo" alt="Vue logo" src="https://jrit-zl-test-1302914566.cos.ap-guangzhou.myqcloud.com/sit/2023-10-19/1697698956763-%E5%A4%A7%E9%9B%84.png">
           <span v-if="!isCollapse">ChrisZhang </span>
         </div>
-        <el-menu-item index="1" route="/home">
-          <i class="el-icon-s-home"></i>
-          <span slot="title">首页</span>
-        </el-menu-item>
-        <el-submenu index="8">
-          <template slot="title">
-            <i class="el-icon-goods"></i>
-            <span>功能库</span>
+        <template v-for="item in menuOptions">
+          <template v-if="item.type === 'page'">
+            <el-menu-item :index="item.index" :route="item.route" :key="item.index">
+              <i class="el-icon-s-home"></i>
+              <span slot="title">{{ item.menuName }}</span>
+            </el-menu-item>
           </template>
-          <el-menu-item index="9" route="/echarts">
-            <i class="el-icon-s-data"></i>
-            <span slot="title">Echarts使用</span>
-          </el-menu-item>
-          <el-menu-item index="10" route="/pdfDrag">
-            <i class="el-icon-stopwatch"></i>
-            <span slot="title">电子签合同拖拽方案</span>
-          </el-menu-item>
-          <el-menu-item index="11" route="/kaifangqian">
-            <i class="el-icon-stopwatch"></i>
-            <span slot="title">开放签方案</span>
-          </el-menu-item>
-          <el-menu-item index="12" route="/tempDrag">
-            <i class="el-icon-stopwatch"></i>
-            <span slot="title">模板拖拽</span>
-          </el-menu-item>
-          <el-menu-item index="13" route="/webSpeechApi">
-            <i class="el-icon-stopwatch"></i>
-            <span slot="title">语音监听并合成文字</span>
-          </el-menu-item>
-          <el-menu-item index="14" route="/diff">
-            <i class="el-icon-stopwatch"></i>
-            <span slot="title">diff插件比对使用</span>
-          </el-menu-item>
-          <el-menu-item index="15" route="/largeFileUpload">
-            <i class="el-icon-stopwatch"></i>
-            <span slot="title">大文件切片上传</span>
-          </el-menu-item>
-          <el-menu-item index="16" route="/combinePdf">
-            <i class="el-icon-stopwatch"></i>
-            <span slot="title">pdf合并</span>
-          </el-menu-item>
-          <el-menu-item index="17" route="/vue-draggable-resizable">
-            <i class="el-icon-stopwatch"></i>
-            <span slot="title">vue-draggable-resizable插件使用</span>
-          </el-menu-item>
-          <el-menu-item index="18" route="/driverjs">
-            <i class="el-icon-stopwatch"></i>
-            <span slot="title">页面引导driver.js使用</span>
-          </el-menu-item>
-          <el-menu-item index="19" route="/pictureToPicture">
-            <i class="el-icon-stopwatch"></i>
-            <span slot="title">前端画中画实现</span>
-          </el-menu-item>
-        </el-submenu>
-        <el-submenu index="1">
-          <template slot="title">
-            <i class="el-icon-goods"></i>
-            <span>组件库</span>
+          <template v-if="item.type === 'menu'">
+            <el-submenu :index="item.index" :key="item.index">
+              <template slot="title">
+                <i class="el-icon-goods"></i>
+                <span>{{ item.menuName }}</span>
+              </template>
+              <template v-if="item.children && item.children.length">
+                <template v-for="childItem in item.children">
+                  <el-menu-item :index="childItem.index" :route="childItem.route" :key="childItem.index">
+                    <i class="el-icon-burger"></i>
+                    <span slot="title">{{ childItem.menuName }}</span>
+                  </el-menu-item>
+                </template>
+              </template>
+            </el-submenu>
           </template>
-          <el-menu-item index="1" route="/hamburger">
-            <i class="el-icon-burger"></i>
-            <span slot="title">汉堡动态图</span>
-          </el-menu-item>
-          <el-menu-item index="2" route="/uploadFile">
-            <i class="el-icon-upload"></i>
-            <span slot="title">文件上传</span>
-          </el-menu-item>
-          <el-menu-item index="3" route="/qrcode">
-            <i class="el-icon-film"></i>
-            <span slot="title">二维码生成</span>
-          </el-menu-item>
-          <el-menu-item index="4" route="/virtualScroll">
-            <i class="el-icon-s-order"></i>
-            <span slot="title">虚拟列表</span>
-          </el-menu-item>
-          <el-menu-item index="5" route="/sliderCode">
-            <i class="el-icon-open"></i>
-            <span slot="title">滑块验证</span>
-          </el-menu-item>
-          <el-menu-item index="6" route="/progress">
-            <i class="el-icon-stopwatch"></i>
-            <span slot="title">环形进度条</span>
-          </el-menu-item>
-          <el-menu-item index="7" route="/cropperImage">
-            <i class="el-icon-stopwatch"></i>
-            <span slot="title">图片裁剪</span>
-          </el-menu-item>
-          <el-menu-item index="8" route="/downloadAnimation">
-            <i class="el-icon-stopwatch"></i>
-            <span slot="title">下载动画</span>
-          </el-menu-item>
-          <el-menu-item index="9" route="/clock">
-            <i class="el-icon-stopwatch"></i>
-            <span slot="title">动态时钟</span>
-          </el-menu-item>
-          <el-menu-item index="19" route="/wangEditor">
-            <i class="el-icon-stopwatch"></i>
-            <span slot="title">wangEditor编辑器</span>
-          </el-menu-item>
-        </el-submenu>
+        </template>
       </el-menu>
     </div>
     <div class="right-container">
@@ -157,7 +81,6 @@
 import { menuOptions } from '@/staticData'
 import Hamburger from '@/components/hamburger.vue'
 import Breadcrumb from '@/components/breadcrumb.vue'
-import { mapState, mapGetters } from 'vuex'
 import store from '@/store'
 export default {
   name:'Layout',
@@ -197,11 +120,28 @@ export default {
   },
   created(){
     const locationHref = window.location.href
+    console.log('===locationHref.split(#)===', locationHref.split('#'))
+    const locationHrefArr = locationHref.split('#')
+    const splitRoute = locationHref.split('#')[locationHrefArr.length - 1]
     this.currentRoute = locationHref
+    console.log('===currentRoute===', this.currentRoute)
     this.menuOptions.forEach(item => {
-      if(locationHref.includes(item.route)){
+      if(splitRoute === item.route){
         this.defaultActive = item.index
+      }else{
+        if(item.children && item.children.length){
+          item.children.forEach(childItem => {
+            // console.log('===locationHref===', locationHref)
+            // console.log('===childItem.route===', childItem.route)
+            // console.log('===locationHref.indexOf(childItem.route)===', locationHref.indexOf(childItem.route))
+            if(splitRoute === childItem.route){
+              console.log('===111 childItem.index===', childItem.index)
+              this.defaultActive = childItem.index
+            }
+          })
+        }
       }
+      console.log('===this.defaultActive===', this.defaultActive)
     })
   },
   mounted(){

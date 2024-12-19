@@ -19,7 +19,7 @@ Vue.config.productionTip = false
 // 引入permission.js
 import '@/utils/permission'
 
-import cscrollbar from '@/views/kaifangqian/components/scrollbar/src/Index.vue'
+import cscrollbar from '@/views/toolsPage/kaifangqian/components/scrollbar/src/Index.vue'
 Vue.component('c-scrollbar', cscrollbar)
 
 new Vue({
