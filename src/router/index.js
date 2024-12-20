@@ -21,6 +21,7 @@ const constantRoutes = [
     name:'layout',
     // 路由懒加载：路由配置如下，使用 resolve ，这样打包可以给每个页面单独生成一个js文件，从而减小访问页面时的体积，加快加载速度
     component: resolve => require(['@/views/layout/index.vue'],resolve),
+    redirect:'/home',
     children: [
       // 组件库
       {
