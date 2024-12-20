@@ -60,6 +60,11 @@ export const menuOptions = [
         index:'2-10',
         route:'/componentsPage/wangEditor',
         menuName:'wangEditor编辑器',
+      },
+      {
+        index:'2-11',
+        route:'/componentsPage/waterfallFlow',
+        menuName:'小红书瀑布流',
       }
     ]
   },

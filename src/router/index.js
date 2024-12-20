@@ -99,6 +99,12 @@ const constantRoutes = [
         name:'wangEditor',
         meta:{title:'wangEditor编辑器'},
         component:resolve => require(['@/views/componentsPage/wangEditor/index.vue'], resolve)
+      },
+      {
+        path:'waterfallFlow',
+        name:'waterfallFlow',
+        meta:{title:'小红书瀑布流'},
+        component:resolve => require(['@/views/componentsPage/waterfallFlow/index.vue'], resolve)
       }
     ]
   },
