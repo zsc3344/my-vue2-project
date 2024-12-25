@@ -1,17 +1,18 @@
 <template>
   <div class="home">
-    <upload
-    ></upload>
+    <div class="upload-container">
+      <upload />
+    </div>
   </div>
 </template>
 <script>
 import upload from '@/components/upload.vue'
 export default {
-  name:'UploadFile',
-  components:{
+  name: 'UploadFile',
+  components: {
     upload
   },
-  data(){
+  data() {
     return {
     }
   }
@@ -20,5 +21,8 @@ export default {
 <style lang="scss" scoped>
 .home{
   padding: 10px;
+  .upload-container{
+    // width: 200px;
+  }
 }
 </style>

@@ -74,3 +74,6 @@ Vue.use(Loading.directive)
 Vue.prototype.$loading = Loading.service
 Vue.prototype.$msgbox = MessageBox
 Vue.prototype.$message = Message
+
+// 全局注册 MessageBox 方法
+Vue.prototype.$confirm = MessageBox.confirm
