@@ -32,14 +32,14 @@ export default {
     }
   },
   computed: {
-    endIndex() {
-      return this.startIndex + this.renderCount
-    },
     listHeight() {
       return this.listData.length * this.itemHeight
     },
     renderCount() {
       return Math.ceil(this.containerHeight / this.itemHeight)
+    },
+    endIndex() {
+      return this.startIndex + this.renderCount
     },
     renderList() {
       return this.listData.slice(this.startIndex, this.endIndex + 1)
