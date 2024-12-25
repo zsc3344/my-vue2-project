@@ -2,25 +2,25 @@
 <template>
   <div class="item">
     <img class="img" src="@/assets/logo.png" alt="" srcset="">
-    <span>{{index+1}}、每一行的内容</span>
+    <span>{{ index+1 }}、每一行的内容</span>
   </div>
 </template>
 
 <script>
-  export default {
-    name: 'item',
-    props: {
-      index: { // 每一行的索引
-        type: Number
-      },
-      source: { // 每一行的内容
-        type: Object,
-        default () {
-          return {}
-        }
+export default {
+  name: 'Item',
+  props: {
+    index: { // 每一行的索引
+      type: Number
+    },
+    source: { // 每一行的内容
+      type: Object,
+      default() {
+        return {}
       }
     }
   }
+}
 </script>
 <style lang="scss" scoped>
 .item{
